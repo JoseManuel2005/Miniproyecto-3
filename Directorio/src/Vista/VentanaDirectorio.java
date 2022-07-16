@@ -44,79 +44,70 @@ public class VentanaDirectorio extends JFrame {
     private JButton btnContactoAnterior;
     private JButton btnContactoSiguiente;
     private JComboBox cBoxTipoTelefono;
-    private JPanel pnelNorte;
-    private JPanel pnelTelefono;
-    private JPanel pnelDireccion;
-    private JPanel pnelBotones;
+    private JPanel pnel1;
+    private JPanel pnel2;
+   
+
     Container contenedorPpal;
 
     public VentanaDirectorio() {
+        iniciarComponentes();
         setTitle("Directorio");
-        setSize(800, 700);
+        setSize(800, 540);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        iniciarComponentes();
     }
 
     private void iniciarComponentes() {
 
         lblNombres = new JLabel("Nombres: ");
+        lblNombres.setBounds(20, 40, 100, 10);
         txtNombres = new JTextField();
+        txtNombres.setBounds(90, 35, 200, 30);
         lblApellidos = new JLabel("Apellidos: ");
+        lblApellidos.setBounds(20, 70, 100, 15);
         txtApellidos = new JTextField();
+        txtApellidos.setBounds(90, 70, 200, 30);
         lblFechaNacimiento = new JLabel("Fecha nacimiento mm/dd/aa: ");
+        lblFechaNacimiento.setBounds(320, 40, 200, 10);
         txtFechaNacimiento = new JTextField();
+        txtFechaNacimiento.setBounds(495, 35, 200, 30);
         lblId = new JLabel("Id: ");
+        lblId.setBounds(470, 70, 100, 10);
         txtId = new JTextField();
+        txtId.setBounds(495, 70, 200, 30);
         cBoxTipoTelefono = new JComboBox();
+        cBoxTipoTelefono.setBounds(700, 70, 50, 30);
         cBoxTipoTelefono.addItem("CC");
         cBoxTipoTelefono.addItem("TI");
         cBoxTipoTelefono.addItem("CE");
-        pnelNorte = new JPanel();
-        pnelNorte.setLayout(new GridLayout(2, 3, 5, 5));
-        pnelNorte.add(lblNombres);
-        pnelNorte.add(txtNombres);
-        pnelNorte.add(lblApellidos);
-        pnelNorte.add(txtApellidos);
-        pnelNorte.add(lblFechaNacimiento);
-        pnelNorte.add(txtFechaNacimiento);
-        pnelNorte.add(lblId);
-        pnelNorte.add(txtId);
-        pnelNorte.add(cBoxTipoTelefono);
-
         lblTelefono = new JLabel("Telefono #   : ");
+        lblTelefono.setBounds(20, 150, 100, 15);
         txtTipoTelefono = new JTextField();
+        txtTipoTelefono.setBounds(20, 170, 200, 30);
         txtTelefono = new JTextField();
-        btnTelefonoAnterior = new JButton("Anterior");
-        btnTelefonoSiguiente = new JButton("Siguiente");
-        pnelTelefono = new JPanel();
-        pnelTelefono.setLayout(new GridLayout(2, 3, 5, 5));
-        pnelTelefono.add(lblTelefono);
-        pnelTelefono.add(txtTipoTelefono);
-        pnelTelefono.add(txtTelefono);
-        pnelTelefono.add(btnTelefonoAnterior);
-        pnelTelefono.add(btnTelefonoSiguiente);
-
+        txtTelefono.setBounds(240, 170, 200, 30);
+        btnTelefonoAnterior = new JButton("<");
+        btnTelefonoAnterior.setBounds(450, 170, 50, 30);
+        btnTelefonoSiguiente = new JButton(">");
+        btnTelefonoSiguiente.setBounds(505, 170, 50, 30);
         lblDireccion = new JLabel("Direccion # : ");
+        lblDireccion.setBounds(20, 250, 100, 15);
         txtDireccion = new JTextField();
+        txtDireccion.setBounds(20, 270, 200, 30);
         lblBarrio = new JLabel("Barrio");
+        lblBarrio.setBounds(240, 250, 100, 10);
         txtBarrio = new JTextField();
+        txtBarrio.setBounds(240, 270, 200, 30);
         lblCiudad = new JLabel("Ciudad");
+        lblCiudad.setBounds(460, 250, 100, 10);
         txtCiudad = new JTextField();
-        btnDireccionAnterior = new JButton("Anterior");
-        btnDireccionSiguiente = new JButton("Siguiente");
-        pnelDireccion = new JPanel();
-        pnelDireccion.setLayout(new GridLayout(3, 3, 5, 5));
-        pnelDireccion.add(lblDireccion);
-        pnelDireccion.add(txtDireccion);
-        pnelDireccion.add(lblBarrio);
-        pnelDireccion.add(txtBarrio);
-        pnelDireccion.add(lblCiudad);
-        pnelDireccion.add(txtCiudad);
-        pnelDireccion.add(btnDireccionAnterior);
-        pnelDireccion.add(btnDireccionSiguiente);
-
+        txtCiudad.setBounds(460, 270, 200, 30);
+        btnDireccionAnterior = new JButton("<");
+        btnDireccionAnterior.setBounds(20, 310, 50, 30);
+        btnDireccionSiguiente = new JButton(">");
+        btnDireccionSiguiente.setBounds(75, 310, 50, 30);       
         btnAgregar = new JButton("Agregar");
         btnActualizar = new JButton("Actualizar");
         btnEliminar = new JButton("Eliminar");
@@ -126,25 +117,47 @@ public class VentanaDirectorio extends JFrame {
         btnContactoAnterior = new JButton("Anterior");
         lblNumeroContacto = new JLabel("#");
         btnContactoSiguiente = new JButton("Siguiente");
-        pnelBotones = new JPanel();
-        pnelBotones.setLayout(new GridLayout(2, 10, 10, 10));
-        pnelBotones.add(btnAgregar);
-        pnelBotones.add(btnActualizar);
-        pnelBotones.add(btnEliminar);
-        pnelBotones.add(btnListar);
-        pnelBotones.add(btnRestauracion);
-        pnelBotones.add(btnExportarContactos);
-        pnelBotones.add(btnContactoAnterior);
-        pnelBotones.add(lblNumeroContacto);
-        pnelBotones.add(btnContactoSiguiente);
-
+        pnel1 = new JPanel();
+        pnel1.setLayout(new FlowLayout(FlowLayout.CENTER));
+        pnel1.setBounds(0, 370, 800, 40);
+        pnel1.add(btnAgregar);
+        pnel1.add(btnActualizar);
+        pnel1.add(btnEliminar);
+        pnel1.add(btnListar);
+        pnel1.add(btnRestauracion);
+        pnel1.add(btnExportarContactos);
+        pnel2 = new JPanel();
+        pnel2.setLayout(new FlowLayout(FlowLayout.CENTER));
+        pnel2.add(btnContactoAnterior);
+        pnel2.add(lblNumeroContacto);
+        pnel2.add(btnContactoSiguiente);
+        pnel2.setBounds(0, 430, 800, 40);
         contenedorPpal = getContentPane();
-        contenedorPpal.setLayout(new FlowLayout(FlowLayout.LEFT));
-        contenedorPpal.add(pnelNorte);
-        contenedorPpal.add(pnelTelefono);
-        contenedorPpal.add(pnelDireccion);
-        contenedorPpal.add(pnelBotones);
-
+        contenedorPpal.setLayout(null);
+        contenedorPpal.add(lblNombres);
+        contenedorPpal.add(txtNombres);
+        contenedorPpal.add(lblApellidos);
+        contenedorPpal.add(txtApellidos);
+        contenedorPpal.add(lblFechaNacimiento);
+        contenedorPpal.add(txtFechaNacimiento);
+        contenedorPpal.add(lblId);
+        contenedorPpal.add(txtId);
+        contenedorPpal.add(cBoxTipoTelefono);
+        contenedorPpal.add(lblTelefono);
+        contenedorPpal.add(txtTipoTelefono);
+        contenedorPpal.add(txtTelefono);
+        contenedorPpal.add(btnTelefonoAnterior);
+        contenedorPpal.add(btnTelefonoSiguiente);
+        contenedorPpal.add(lblDireccion);
+        contenedorPpal.add(txtDireccion);
+        contenedorPpal.add(lblBarrio);
+        contenedorPpal.add(txtBarrio);
+        contenedorPpal.add(lblCiudad);
+        contenedorPpal.add(txtCiudad);
+        contenedorPpal.add(btnDireccionAnterior);
+        contenedorPpal.add(btnDireccionSiguiente);
+        contenedorPpal.add(pnel1);
+        contenedorPpal.add(pnel2);    
     }
 
 }
