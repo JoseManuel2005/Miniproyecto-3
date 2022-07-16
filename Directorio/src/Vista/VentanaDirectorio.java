@@ -46,6 +46,7 @@ public class VentanaDirectorio extends JFrame {
     private JComboBox cBoxTipoTelefono;
     private JPanel pnel1;
     private JPanel pnel2;
+    private JPanel pnel;
    
 
     Container contenedorPpal;
