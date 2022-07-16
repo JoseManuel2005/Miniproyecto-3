@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author Usuario
  */
-public class VentanaDirectorio extends JFrame {
+public class DirectorioGUI extends JFrame {
 
     private JLabel lblNombres;
     private JLabel lblApellidos;
@@ -45,13 +45,12 @@ public class VentanaDirectorio extends JFrame {
     private JButton btnContactoSiguiente;
     private JComboBox cBoxTipoTelefono;
     private JPanel pnel1;
-    private JPanel pnel2;
-    private JPanel pnel;
+    private JPanel pnel2; 
    
 
     Container contenedorPpal;
 
-    public VentanaDirectorio() {
+    public DirectorioGUI() {
         iniciarComponentes();
         setTitle("Directorio");
         setSize(800, 540);
@@ -158,7 +157,7 @@ public class VentanaDirectorio extends JFrame {
         contenedorPpal.add(btnDireccionAnterior);
         contenedorPpal.add(btnDireccionSiguiente);
         contenedorPpal.add(pnel1);
-        contenedorPpal.add(pnel2);    
+        contenedorPpal.add(pnel2);   
     }
 
 }
