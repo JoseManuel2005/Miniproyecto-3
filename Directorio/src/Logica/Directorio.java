@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author John Doe
  */
 public class Directorio {
     
