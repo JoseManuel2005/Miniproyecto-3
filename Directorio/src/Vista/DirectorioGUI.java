@@ -4,8 +4,14 @@
  */
 package Vista;
 
+import Logica.Persona;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -63,6 +69,8 @@ public class DirectorioGUI extends JFrame {
     private JPanel pnel5;
 
     Container contenedorPpal;
+    
+    Persona personaAux;
 
     public DirectorioGUI() {
         iniciarComponentes();
@@ -74,7 +82,8 @@ public class DirectorioGUI extends JFrame {
     }
 
     private void iniciarComponentes() {
-
+        personaAux = new Persona();
+        
         lblNombres = new JLabel("Nombres: ",SwingConstants.RIGHT);
         txtNombres = new JTextField();
         lblApellidos = new JLabel("Apellidos: ",SwingConstants.RIGHT);
@@ -93,8 +102,8 @@ public class DirectorioGUI extends JFrame {
         chkEmpleado = new JCheckBox("Empleado");
         
         lblTelefono1 = new JLabel("Teléfono 1");
-        lblTelefono2 = new JLabel("Teléfono 2");
-        lblTelefono3 = new JLabel("Teléfono 3");
+        lblTelefono2 = new JLabel("Teléfono 2 (opcional)");
+        lblTelefono3 = new JLabel("Teléfono 3 (opcional)");
         txtTelefono1 = new JTextField();
         txtTelefono2 = new JTextField();
         txtTelefono3 = new JTextField();
@@ -126,7 +135,7 @@ public class DirectorioGUI extends JFrame {
         btnDelDireccion = new JButton("Eliminar"); 
         
         
-        btnAgregar = new JButton("Agregar");
+        btnAgregar = new JButton("Nuevo");
         btnActualizar = new JButton("Actualizar");
         btnEliminar = new JButton("Eliminar");
         btnListar = new JButton("Listar");
@@ -281,14 +290,337 @@ public class DirectorioGUI extends JFrame {
         contenedorPpal.add(pnel3);
         contenedorPpal.add(pnel4);
         contenedorPpal.add(pnel5);
+        
+        btnAgregar.addMouseListener(new ManejadorDeEventos());
+        txtTelefono2.addKeyListener(new ManejadorDeEventos());
+        txtTelefono3.addKeyListener(new ManejadorDeEventos());
+        
+        deshabilitarCampos();
     }
     
     private void sizeC(int columna, int fila, int x, int y, double wx, double wy){
-        c.gridx = columna; 
-        c.gridy = fila;
+        c.gridx = columna; //La columna en la que empieza
+        c.gridy = fila; //La fila en la que empieza
         c.gridwidth = x; //Cuantas columnas ocupa
         c.gridheight = y; //Cuantas filas ocupa
         c.weightx = wx; //Tamano en x
         c.weighty = wy; // Tamano en y
+    }
+    
+    private void deshabilitarCampos(){
+        txtNombres.setEnabled(false);
+        txtApellidos.setEnabled(false);
+        txtFechaNacimiento.setEnabled(false);
+        txtId.setEnabled(false);
+        cBoxTipoId.setEnabled(false);
+        chkEstudiante.setEnabled(false);
+        chkProfesor.setEnabled(false);
+        chkEmpleado.setEnabled(false);
+        
+        txtTelefono1.setEnabled(false);
+        txtTelefono2.setEnabled(false);
+        txtTelefono3.setEnabled(false);
+        cBoxTelefono1.setEnabled(false);
+        cBoxTelefono2.setEnabled(false);
+        cBoxTelefono3.setEnabled(false);
+        
+        txtDireccion.setEnabled(false);
+        txtBarrio.setEnabled(false);
+        txtCiudad.setEnabled(false);
+        btnDireccionAnterior.setEnabled(false);
+        btnDireccionSiguiente.setEnabled(false);
+        btnAddDireccion.setEnabled(false);
+        btnDelDireccion.setEnabled(false);
+    }
+    
+    private void habilitarCampos(){
+        txtNombres.setEnabled(true);
+        txtApellidos.setEnabled(true);
+        txtFechaNacimiento.setEnabled(true);
+        txtId.setEnabled(true);
+        cBoxTipoId.setEnabled(true);
+        chkEstudiante.setEnabled(true);
+        chkProfesor.setEnabled(true);
+        chkEmpleado.setEnabled(true);
+        
+        txtTelefono1.setEnabled(true);
+        txtTelefono2.setEnabled(true);
+        txtTelefono3.setEnabled(true);
+        cBoxTelefono1.setEnabled(true);
+        if(txtTelefono2.getText().length() > 0){
+            cBoxTelefono2.setEnabled(true);
+        }
+        if(txtTelefono3.getText().length() > 0){
+            cBoxTelefono3.setEnabled(true);
+        }
+                
+        txtDireccion.setEnabled(true);
+        txtBarrio.setEnabled(true);
+        txtCiudad.setEnabled(true);
+        btnDireccionAnterior.setEnabled(true);
+        btnDireccionSiguiente.setEnabled(true);
+        btnAddDireccion.setEnabled(true);
+        btnDelDireccion.setEnabled(true);
+    }
+    
+    private void habilitarOpciones(){
+        btnAgregar.setEnabled(true);
+        btnActualizar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnListar.setEnabled(true);
+        btnRestauracion.setEnabled(true);
+        btnExportarContactos.setEnabled(true);
+        btnContactoAnterior.setEnabled(true);
+        btnContactoSiguiente.setEnabled(true);
+    }
+    
+    private void deshabilitarOpciones(){
+        btnAgregar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnListar.setEnabled(false);
+        btnRestauracion.setEnabled(false);
+        btnExportarContactos.setEnabled(false);
+        btnContactoAnterior.setEnabled(false);
+        btnContactoSiguiente.setEnabled(false);
+    }
+    
+    private boolean verificarCampos(){
+        boolean error = false;
+        if(txtNombres.getText().equals("")){
+            error = true;
+            txtNombres.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce un nombre",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        if(txtApellidos.getText().equals("")){
+            error = true;
+            txtApellidos.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce un apellido",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        if(txtFechaNacimiento.getText().equals("")){
+            error = true;
+            txtFechaNacimiento.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce una fecha de nacimiento en el formato (mm/dd/aaaa)",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        try{
+            if(txtId.getText().equals("")){
+                error = true;
+                txtId.setBackground(new Color(255, 210, 200));
+                JOptionPane.showMessageDialog(this, 
+                    "Introduce un ID",
+                    "error",
+                    ERROR_MESSAGE);
+            }
+            else{
+                Long.parseLong(txtId.getText());
+            }
+        }catch(NumberFormatException ne){
+            error = true;
+            txtId.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce un valor valido en el ID",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        if(!chkEstudiante.isSelected() 
+                && !chkProfesor.isSelected() 
+                && !chkEmpleado.isSelected()){
+            error = true;
+            JOptionPane.showMessageDialog(this, 
+                    "Selecciona un rol para el contacto",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        try{
+            if(txtTelefono1.getText().equals("")){
+                error = true;
+                txtTelefono1.setBackground(new Color(255, 210, 200));
+                JOptionPane.showMessageDialog(this, 
+                    "Introduce un número en teléfono 1",
+                    "error",
+                    ERROR_MESSAGE);
+            }
+            else{
+                Long.parseLong(txtTelefono1.getText());
+                if(cBoxTelefono1.getSelectedItem().equals("")){
+                        error = true;
+                        cBoxTelefono1.setBackground(new Color(255, 210, 200));
+                        JOptionPane.showMessageDialog(this, 
+                            "Selecciona el tipo para teléfono 1",
+                            "error",
+                            ERROR_MESSAGE);
+                    }
+            }
+        }catch(NumberFormatException ne){
+            error = true;
+            txtTelefono1.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                        "Introduce un valor numérico en teléfono 1",
+                        "error",
+                        ERROR_MESSAGE);
+        }
+        try{
+            if(txtTelefono2.getText().length() > 0){
+                Long.parseLong(txtTelefono2.getText());
+                if(cBoxTelefono2.getSelectedItem().equals("")){
+                        error = true;
+                        cBoxTelefono2.setBackground(new Color(255, 210, 200));
+                        JOptionPane.showMessageDialog(this, 
+                            "Selecciona el tipo para teléfono 1",
+                            "error",
+                            ERROR_MESSAGE);
+                    }
+            }
+        }catch(NumberFormatException ne){
+            error = true;
+            txtTelefono2.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                        "Introduce un valor numérico en teléfono 2",
+                        "error",
+                        ERROR_MESSAGE);
+        }
+        try{
+            if(txtTelefono3.getText().length() > 0){
+                Long.parseLong(txtTelefono3.getText());
+                if(cBoxTelefono1.getSelectedItem().equals("")){
+                        error = true;
+                        cBoxTelefono3.setBackground(new Color(255, 210, 200));
+                        JOptionPane.showMessageDialog(this, 
+                            "Selecciona el tipo para teléfono 1",
+                            "error",
+                            ERROR_MESSAGE);
+                    }
+            }
+        }catch(NumberFormatException ne){
+            error = true;
+            txtTelefono3.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                        "Introduce un valor numérico en teléfono 3",
+                        "error",
+                        ERROR_MESSAGE);
+        }
+        if(txtDireccion.getText().equals("")){
+            error = true;
+            txtDireccion.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce una dirección",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        if(txtBarrio.getText().equals("")){
+            error = true;
+            txtBarrio.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce un Barrio",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        if(txtCiudad.getText().equals("")){
+            error = true;
+            txtCiudad.setBackground(new Color(255, 210, 200));
+            JOptionPane.showMessageDialog(this, 
+                    "Introduce una ciudad",
+                    "error",
+                    ERROR_MESSAGE);
+        }
+        return error;
+    }
+    
+    private void reestablecerColores(){
+        txtNombres.setBackground(null);
+        txtApellidos.setBackground(null);
+        txtFechaNacimiento.setBackground(null);
+        txtId.setBackground(null);
+        txtTelefono1.setBackground(null);
+        txtTelefono2.setBackground(null);
+        txtTelefono3.setBackground(null);
+        cBoxTelefono1.setBackground(null);
+        cBoxTelefono2.setBackground(null);
+        cBoxTelefono3.setBackground(null);
+        txtDireccion.setBackground(null);
+        txtBarrio.setBackground(null);
+        txtCiudad.setBackground(null);
+    }
+    
+    public class ManejadorDeEventos implements MouseListener, KeyListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if(e.getSource() == btnAgregar){
+                if(btnAgregar.getText().equals("Nuevo")){
+                    habilitarCampos();
+                    btnAgregar.setText("Agregar");
+                    deshabilitarOpciones();
+                    btnAgregar.setEnabled(true);
+                }
+                else if (btnAgregar.getText().equals("Agregar")){
+                    reestablecerColores();
+                    if(!verificarCampos()){
+                        
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getSource() == txtTelefono2){
+                if(txtTelefono2.getText().length() == 0){
+                    cBoxTelefono2.setEnabled(true);
+                }
+                if(e.getKeyCode() == 8){
+                    if(txtTelefono2.getText().length() == 1)
+                    cBoxTelefono2.setEnabled(false);
+                }
+            }
+            if(e.getSource() == txtTelefono3){
+                if(txtTelefono3.getText().length() == 0){
+                    cBoxTelefono3.setEnabled(true);
+                }
+                if(e.getKeyCode() == 8){
+                    if(txtTelefono3.getText().length() == 1)
+                    cBoxTelefono3.setEnabled(false);
+                }
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }
     }
 }

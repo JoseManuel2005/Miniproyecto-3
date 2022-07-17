@@ -5,6 +5,7 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,13 +16,21 @@ public class Persona {
     private String nombre;
     private String apellidos;
     private String fecha;
-    private int id;
+    private long id;
     private String idTipo;
-    private ArrayList<Direccion> dirreciones;
+    private ArrayList<Direccion> direcciones;
     private ArrayList<Telefono> telefonos;
     private  Map<String,Integer> contacto;
 
     public Persona() {
+        nombre = "";
+        apellidos = "";
+        fecha = "";
+        id = 0;
+        idTipo = "";
+        direcciones = new ArrayList<>();
+        telefonos = new ArrayList<>();
+        contacto = new HashMap();
     }
 
     public String getNombre() {
@@ -36,7 +45,7 @@ public class Persona {
         return fecha;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -45,7 +54,7 @@ public class Persona {
     }
 
     public ArrayList<Direccion> getDirreciones() {
-        return dirreciones;
+        return direcciones;
     }
 
     public ArrayList<Telefono> getTelefonos() {
@@ -68,7 +77,7 @@ public class Persona {
         this.fecha = fecha;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -76,8 +85,8 @@ public class Persona {
         this.idTipo = idTipo;
     }
 
-    public void setDirreciones(ArrayList<Direccion> dirreciones) {
-        this.dirreciones = dirreciones;
+    public void setDirreciones(ArrayList<Direccion> direcciones) {
+        this.direcciones = direcciones;
     }
 
     public void setTelefonos(ArrayList<Telefono> telefonos) {

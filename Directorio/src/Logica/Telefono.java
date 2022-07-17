@@ -9,15 +9,15 @@ package Logica;
  * @author Usuario
  */
 public class Telefono {
-    private  int numero;
+    private long numero;
     private String tipo;
 
-    public Telefono(int numero, String tipo) {
+    public Telefono(long numero, String tipo) {
         this.numero = numero;
         this.tipo = tipo;
     }
 
-    public int getNumero() {
+    public long getNumero() {
         return numero;
     }
 
@@ -25,7 +25,7 @@ public class Telefono {
         return tipo;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(long numero) {
         this.numero = numero;
     }
 

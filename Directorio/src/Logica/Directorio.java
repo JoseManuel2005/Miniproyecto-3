@@ -3,24 +3,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Logica;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
  *
- * @author John Doe
+ * @author mauricio.munoz
  */
 public class Directorio {
     
-    private ArrayList<Persona> personas;
+    //private ArrayList<Persona> personas;
+    private ArrayList<Archivo> archivos;
     private Archivo archivoPersona;
 
-    public Directorio(ArrayList<Persona> personas, Archivo archivoPersona) {
-        this.personas = personas;
-        this.archivoPersona = archivoPersona;
+    public Directorio() {
+      //  this.personas = personas;
+      // this.archivoPersona = archivoPersona;
+      archivos = new ArrayList<>();
+    }
+
+    public ArrayList<Archivo> getArchivos() {
+        return archivos;
+    }
+
+    public void setArchivos(ArrayList<Archivo> archivos) {
+        this.archivos = archivos;
     }
     
-    private void agregarPersona(){
-    
+    private void agregarPersona(Persona persona) throws IOException{
+        FileWriter archivoTexto = new FileWriter("src/archivos/persona_" + 
+                (archivos.size() + 1) + ".txt");
+        
+        PrintWriter pw = new PrintWriter(archivoTexto);
+        
+        pw.println("Nombre : " + persona.getNombre());
+        pw.println("Apellidos : " + persona.getApellidos());
+        pw.println("");
     }
     
     private void actualizarPersona(){
