@@ -13,10 +13,13 @@ public class Direccion {
     private String barrio;
     private String ciudad;
 
-    public Direccion(String direccion, String barrio, String ciudad) {
-        this.direccion = direccion;
+    public Direccion(/*String direccion, String barrio, String ciudad*/) {
+        /*this.direccion = direccion;
         this.barrio = barrio;
-        this.ciudad = ciudad;
+        this.ciudad = ciudad;*/
+        direccion = "";
+        barrio = "";
+        ciudad = "";
     }
 
     
