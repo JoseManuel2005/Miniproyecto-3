@@ -1,0 +1,14 @@
+Nombre : Luis
+Apellidos : Manin
+Fecha de Nacimiento : Manin
+ID : 1313
+Tipo de Documento : CE
+Rol : Profesor,
+Telefono 1 : 1341
+Tipo de Telefono 1 : Casa
+Telefono 2 : 14345
+Tipo de Telefono 2 : Móvil
+Telefono 3 : 51245
+Tipo de Telefono 3 : Trabajo
+Direccion 1 : add, asfasf, asdfdf
+Direccion 2 : afsd, afss, asdv

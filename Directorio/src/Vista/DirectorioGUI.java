@@ -4,14 +4,26 @@
  */
 package Vista;
 
+import Logica.Archivo;
+import Logica.Direccion;
+import Logica.Directorio;
 import Logica.Persona;
+import Logica.Telefono;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -71,6 +83,9 @@ public class DirectorioGUI extends JFrame {
     Container contenedorPpal;
     
     Persona personaAux;
+    Directorio miDirectorio;
+    ArrayList <Direccion> auxDirecciones;
+    int numDireccion;
 
     public DirectorioGUI() {
         iniciarComponentes();
@@ -83,6 +98,10 @@ public class DirectorioGUI extends JFrame {
 
     private void iniciarComponentes() {
         personaAux = new Persona();
+        miDirectorio = new Directorio();
+        auxDirecciones = new ArrayList<>();
+        auxDirecciones.add(new Direccion());
+        numDireccion = 0;
         
         lblNombres = new JLabel("Nombres: ",SwingConstants.RIGHT);
         txtNombres = new JTextField();
@@ -133,7 +152,6 @@ public class DirectorioGUI extends JFrame {
         btnDireccionSiguiente = new JButton(">");
         btnAddDireccion = new JButton("Nuevo");   
         btnDelDireccion = new JButton("Eliminar"); 
-        
         
         btnAgregar = new JButton("Nuevo");
         btnActualizar = new JButton("Actualizar");
@@ -292,6 +310,10 @@ public class DirectorioGUI extends JFrame {
         contenedorPpal.add(pnel5);
         
         btnAgregar.addMouseListener(new ManejadorDeEventos());
+        btnAddDireccion.addMouseListener(new ManejadorDeEventos());
+        btnDelDireccion.addMouseListener(new ManejadorDeEventos());
+        btnDireccionAnterior.addMouseListener(new ManejadorDeEventos());
+        btnDireccionSiguiente.addMouseListener(new ManejadorDeEventos());
         txtTelefono2.addKeyListener(new ManejadorDeEventos());
         txtTelefono3.addKeyListener(new ManejadorDeEventos());
         
@@ -508,47 +530,63 @@ public class DirectorioGUI extends JFrame {
                         "error",
                         ERROR_MESSAGE);
         }
-        if(txtDireccion.getText().equals("")){
-            error = true;
-            txtDireccion.setBackground(new Color(255, 210, 200));
-            JOptionPane.showMessageDialog(this, 
-                    "Introduce una dirección",
-                    "error",
-                    ERROR_MESSAGE);
-        }
-        if(txtBarrio.getText().equals("")){
-            error = true;
-            txtBarrio.setBackground(new Color(255, 210, 200));
-            JOptionPane.showMessageDialog(this, 
-                    "Introduce un Barrio",
-                    "error",
-                    ERROR_MESSAGE);
-        }
-        if(txtCiudad.getText().equals("")){
-            error = true;
-            txtCiudad.setBackground(new Color(255, 210, 200));
-            JOptionPane.showMessageDialog(this, 
-                    "Introduce una ciudad",
-                    "error",
-                    ERROR_MESSAGE);
+        int j = 1;
+        for(Direccion direccion: auxDirecciones){
+            if(direccion.getDireccion().equals("") ||
+                    direccion.getBarrio().equals("") ||
+                    direccion.getCiudad().equals("")){
+                error = true;
+                JOptionPane.showMessageDialog(this, 
+                        ("La direccion " + j + " tiene campos vacios") ,
+                        "error",
+                        ERROR_MESSAGE);
+            }
+            j++;
         }
         return error;
     }
     
     private void reestablecerColores(){
-        txtNombres.setBackground(null);
-        txtApellidos.setBackground(null);
-        txtFechaNacimiento.setBackground(null);
-        txtId.setBackground(null);
-        txtTelefono1.setBackground(null);
-        txtTelefono2.setBackground(null);
-        txtTelefono3.setBackground(null);
-        cBoxTelefono1.setBackground(null);
-        cBoxTelefono2.setBackground(null);
-        cBoxTelefono3.setBackground(null);
-        txtDireccion.setBackground(null);
-        txtBarrio.setBackground(null);
-        txtCiudad.setBackground(null);
+        txtNombres.setBackground(Color.white);
+        txtApellidos.setBackground(Color.white);
+        txtFechaNacimiento.setBackground(Color.white);
+        txtId.setBackground(Color.white);
+        txtTelefono1.setBackground(Color.white);
+        txtTelefono2.setBackground(Color.white);
+        txtTelefono3.setBackground(Color.white);
+        cBoxTelefono1.setBackground(Color.white);
+        cBoxTelefono2.setBackground(Color.white);
+        cBoxTelefono3.setBackground(Color.white);
+        txtDireccion.setBackground(Color.white);
+        txtBarrio.setBackground(Color.white);
+        txtCiudad.setBackground(Color.white);
+    }
+    
+    private void reestablecerCampos(){
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtFechaNacimiento.setText("");
+        txtId.setText("");
+        cBoxTipoId.setSelectedItem(1);
+        chkEstudiante.setSelected(false);
+        chkProfesor.setSelected(false);
+        chkEmpleado.setSelected(false);
+        txtTelefono1.setText("");
+        txtTelefono2.setText("");
+        txtTelefono3.setText("");
+        cBoxTelefono1.setSelectedItem("");
+        cBoxTelefono2.setSelectedItem("");
+        cBoxTelefono3.setSelectedItem("");
+        txtDireccion.setText("");
+        txtBarrio.setText("");
+        txtCiudad.setText("");
+    }
+    
+    private void actualizarDireccion(){
+        lblDireccion.setText("Direccion " + (numDireccion+1));
+        txtDireccion.setText(auxDirecciones.get(numDireccion).getDireccion());
+        txtBarrio.setText(auxDirecciones.get(numDireccion).getBarrio());
+        txtCiudad.setText(auxDirecciones.get(numDireccion).getCiudad());
     }
     
     public class ManejadorDeEventos implements MouseListener, KeyListener{
@@ -566,11 +604,136 @@ public class DirectorioGUI extends JFrame {
                     btnAgregar.setText("Agregar");
                     deshabilitarOpciones();
                     btnAgregar.setEnabled(true);
+                    btnDireccionAnterior.setEnabled(false);
+                    btnDireccionSiguiente.setEnabled(false);
+                    btnDelDireccion.setEnabled(false);
                 }
                 else if (btnAgregar.getText().equals("Agregar")){
                     reestablecerColores();
+                    auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                    auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                    auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+                    
                     if(!verificarCampos()){
+                        Map<String,Boolean> tipoContactoAux;
+                        tipoContactoAux = new HashMap<>();
+                        tipoContactoAux.put("Estudiante",false);
+                        tipoContactoAux.put("Profesor",false);
+                        tipoContactoAux.put("Empleado",false);
                         
+                        personaAux.setNombre(txtNombres.getText());
+                        personaAux.setApellidos(txtApellidos.getText());
+                        personaAux.setFecha(txtFechaNacimiento.getText());
+                        personaAux.setId(Long.parseLong(txtId.getText()));
+                        personaAux.setIdTipo(cBoxTipoId.getSelectedItem().toString());
+                        if(chkEstudiante.isSelected()){
+                            tipoContactoAux.replace("Estudiante",true);
+                        }
+                        if(chkProfesor.isSelected()){
+                            tipoContactoAux.replace("Profesor",true);
+                        }
+                        if(chkEmpleado.isSelected()){
+                            tipoContactoAux.replace("Empleado",true);
+                        }
+                        personaAux.setContacto(tipoContactoAux);
+                        
+                        Telefono auxTel = new Telefono();
+                        ArrayList<Telefono> auxTels = new ArrayList<>();
+                        auxTel.setNumero(Long.parseLong(txtTelefono1.getText()));
+                        auxTel.setTipo((cBoxTelefono1.getSelectedItem().toString()));
+                        auxTels.add(auxTel);
+                        if(!txtTelefono2.getText().equals("")){
+                            Telefono auxTel2 = new Telefono();
+                            auxTel2.setNumero(Long.parseLong(txtTelefono2.getText()));
+                            auxTel2.setTipo(cBoxTelefono2.getSelectedItem().toString());
+                            auxTels.add(auxTel2);
+                        }
+                        if(!txtTelefono3.getText().equals("")){
+                            Telefono auxTel3 = new Telefono();
+                            auxTel3.setNumero(Long.parseLong(txtTelefono3.getText()));
+                            auxTel3.setTipo(cBoxTelefono3.getSelectedItem().toString());
+                            auxTels.add(auxTel3);
+                        }
+                        personaAux.setTelefonos(auxTels);
+                        personaAux.setDirecciones(auxDirecciones);
+                        
+                        try {
+                            miDirectorio.agregarPersona(personaAux);
+                            JOptionPane.showMessageDialog(null, 
+                                ("El contacto " + txtNombres.getText() + " ha sido añadido con exito") ,
+                                "Nuevo Contacto",
+                                INFORMATION_MESSAGE);
+                            reestablecerCampos();
+                            deshabilitarCampos();
+                            btnAgregar.setText("Nuevo");
+                            personaAux = new Persona();
+                            auxDirecciones = new ArrayList<>();
+                            auxDirecciones.add(new Direccion());
+                            numDireccion = 0;
+                        } catch (IOException ex) {
+                            Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    }
+                }
+            }
+            if(e.getSource() == btnAddDireccion){
+                btnDelDireccion.setEnabled(true);
+                auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+                
+                auxDirecciones.add(new Direccion());
+                numDireccion = auxDirecciones.size() - 1;
+                
+                actualizarDireccion();
+                btnDireccionAnterior.setEnabled(true);
+            }
+            if(e.getSource() == btnDireccionAnterior){
+                if(numDireccion != 0){
+                    btnDireccionAnterior.setEnabled(true);
+                    btnDireccionSiguiente.setEnabled(true);
+                    auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                    auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                    auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+                    
+                    numDireccion -= 1;
+                    actualizarDireccion();
+                }if(numDireccion == 0){
+                    btnDireccionAnterior.setEnabled(false);
+                }
+            }
+            if(e.getSource() == btnDireccionSiguiente){
+                if(numDireccion != auxDirecciones.size()-1){
+                    btnDireccionAnterior.setEnabled(true);
+                    auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                    auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                    auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+                    
+                    numDireccion += 1;
+                    actualizarDireccion();
+                }if(numDireccion == auxDirecciones.size()-1){
+                    btnDireccionSiguiente.setEnabled(false);
+                }
+            }
+            if(e.getSource() == btnDelDireccion){
+                if(auxDirecciones.size() != 1){
+                    if(numDireccion == auxDirecciones.size()-1){
+                        if(auxDirecciones.size() == 2){
+                            btnDireccionAnterior.setEnabled(false);
+                            btnDireccionSiguiente.setEnabled(false);
+                        }
+                        auxDirecciones.remove(auxDirecciones.size()-1);
+                        numDireccion = auxDirecciones.size()-1;
+                    }else if(numDireccion == 0){
+                        auxDirecciones.remove(0);
+                    }else{
+                        auxDirecciones.remove(numDireccion);
+                        numDireccion -= 1;
+                    }
+                    actualizarDireccion();
+                    if(auxDirecciones.size() == 1){
+                        btnDelDireccion.setEnabled(false);
                     }
                 }
             }

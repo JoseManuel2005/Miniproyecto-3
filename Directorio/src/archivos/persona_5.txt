@@ -1,0 +1,13 @@
+Nombre : Juan
+Apellidos : few
+Fecha de Nacimiento : few
+ID : 1213
+Tipo de Documento : CC
+Rol : Profesor,Empleado,Estudiante,
+Telefono 1 : 2
+Tipo de Telefono 1 : Casa
+Telefono 2 : 3414
+Tipo de Telefono 2 : Móvil
+Telefono 3 : 2134
+Tipo de Telefono 3 : Trabajo
+Direccion 1 : 24, wqef, wefq

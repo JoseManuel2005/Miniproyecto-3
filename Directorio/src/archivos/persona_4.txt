@@ -1,0 +1,13 @@
+Nombre : Alejo
+Apellidos : Munoz G
+Fecha de Nacimiento : Munoz G
+ID : 1212333
+Tipo de Documento : CC
+Rol : Profesor,Estudiante,
+Telefono 1 : 12314
+Tipo de Telefono 1 : Casa
+Telefono 2 : 125125
+Tipo de Telefono 2 : Móvil
+Telefono 3 : 62323
+Tipo de Telefono 3 : Trabajo
+Direccion 1 : AFA, asfgsa, sadvas

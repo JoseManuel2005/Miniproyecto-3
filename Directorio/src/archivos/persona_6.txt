@@ -1,0 +1,13 @@
+Nombre : Prueba
+Apellidos : pepe
+Fecha de Nacimiento : pepe
+ID : 1341
+Tipo de Documento : CE
+Rol : Profesor,Empleado,Estudiante,
+Telefono 1 : 2133
+Tipo de Telefono 1 : Casa
+Telefono 2 : 152
+Tipo de Telefono 2 : Móvil
+Telefono 3 : 462
+Tipo de Telefono 3 : Trabajo
+Direccion 1 : pepe, pepe, pepe

@@ -1,0 +1,8 @@
+Nombre : Mauricio
+Apellidos : Munoz Gutierrez
+Fecha de Nacimiento : Munoz Gutierrez
+ID : 10000321
+Tipo de Documento : CC
+Rol : Profesor,Empleado,Estudiante,
+Direccion 1 : carrera, mario, cali
+Direccion 1 : calle, juan, palmira

@@ -20,7 +20,7 @@ public class Persona {
     private String idTipo;
     private ArrayList<Direccion> direcciones;
     private ArrayList<Telefono> telefonos;
-    private  Map<String,Integer> contacto;
+    private Map<String,Boolean> contacto;
 
     public Persona() {
         nombre = "";
@@ -31,6 +31,9 @@ public class Persona {
         direcciones = new ArrayList<>();
         telefonos = new ArrayList<>();
         contacto = new HashMap();
+        contacto.put("Estudiante",false);
+        contacto.put("Profesor",false);
+        contacto.put("Empleado",false);
     }
 
     public String getNombre() {
@@ -61,7 +64,7 @@ public class Persona {
         return telefonos;
     }
 
-    public Map<String, Integer> getContacto() {
+    public Map<String, Boolean> getContacto() {
         return contacto;
     }
 
@@ -85,7 +88,7 @@ public class Persona {
         this.idTipo = idTipo;
     }
 
-    public void setDirreciones(ArrayList<Direccion> direcciones) {
+    public void setDirecciones(ArrayList<Direccion> direcciones) {
         this.direcciones = direcciones;
     }
 
@@ -93,7 +96,7 @@ public class Persona {
         this.telefonos = telefonos;
     }
 
-    public void setContacto(Map<String, Integer> contacto) {
+    public void setContacto(Map<String, Boolean> contacto) {
         this.contacto = contacto;
     }
     

@@ -12,9 +12,9 @@ public class Telefono {
     private long numero;
     private String tipo;
 
-    public Telefono(long numero, String tipo) {
-        this.numero = numero;
-        this.tipo = tipo;
+    public Telefono() {
+        numero = 0;
+        tipo = "";
     }
 
     public long getNumero() {

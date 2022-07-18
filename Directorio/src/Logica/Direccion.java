@@ -13,13 +13,11 @@ public class Direccion {
     private String barrio;
     private String ciudad;
 
-    public Direccion(String direccion, String barrio, String ciudad) {
-        this.direccion = direccion;
-        this.barrio = barrio;
-        this.ciudad = ciudad;
+    public Direccion() {
+        direccion = "";
+        barrio = "";
+        ciudad = "";
     }
-
-    
 
     public String getDireccion() {
         return direccion;
@@ -44,8 +42,4 @@ public class Direccion {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
-    
-    
-    
-    
 }
