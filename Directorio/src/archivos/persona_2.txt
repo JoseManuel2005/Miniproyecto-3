@@ -1,14 +1,8 @@
-Nombre : Jose
-Apellidos : Hernandez
-Fecha de Nacimiento : Hernandez
-ID : 12124
-Tipo de Documento : TI
-Rol : Profesor,Empleado,Estudiante,
-Telefono 1 : 51542
-Tipo de Telefono 1 : Trabajo
-Telefono 2 : 51542
-Tipo de Telefono 2 : Trabajo
-Telefono 3 : 51542
-Tipo de Telefono 3 : Trabajo
-Direccion 1 : klasd, sdas, cali
-Direccion 2 : afña, gasdv, yumbo
+Nombre : Alejandro
+Apellidos : Munoz
+Fecha de Nacimiento : 08/09/2003
+ID : 103123
+Tipo de Documento : CC
+Rol : Estudiante,
+Telefono 1 : 12313, Móvil
+Direccion 1 : carrera, Tequendama, Cali

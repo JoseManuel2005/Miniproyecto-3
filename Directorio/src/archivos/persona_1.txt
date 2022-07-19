@@ -1,8 +1,11 @@
 Nombre : Mauricio
 Apellidos : Munoz Gutierrez
 Fecha de Nacimiento : Munoz Gutierrez
-ID : 10000321
+ID : 1005982131
 Tipo de Documento : CC
-Rol : Profesor,Empleado,Estudiante,
-Direccion 1 : carrera, mario, cali
-Direccion 1 : calle, juan, palmira
+Rol : Estudiante,
+Telefono 1 : 31312341, Móvil
+Telefono 2 : 52141321, Casa
+Telefono 3 : 52323534, Trabajo
+Direccion 1 : carrera, santa anita, cali
+Direccion 2 : calle aae, manin, palmira

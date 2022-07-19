@@ -4,6 +4,7 @@
  */
 package Main;
 import Vista.*;
+import java.io.IOException;
 /**
  *
  * @author Usuario
@@ -13,7 +14,7 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         DirectorioGUI ventana = new DirectorioGUI();
     }

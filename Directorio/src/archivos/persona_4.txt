@@ -1,13 +1,9 @@
-Nombre : Alejo
-Apellidos : Munoz G
-Fecha de Nacimiento : Munoz G
-ID : 1212333
-Tipo de Documento : CC
-Rol : Profesor,Estudiante,
-Telefono 1 : 12314
-Tipo de Telefono 1 : Casa
-Telefono 2 : 125125
-Tipo de Telefono 2 : Móvil
-Telefono 3 : 62323
-Tipo de Telefono 3 : Trabajo
-Direccion 1 : AFA, asfgsa, sadvas
+Nombre : Pepe
+Apellidos : Rodrigez Paz
+Fecha de Nacimiento : 06/903/1978
+ID : 123414
+Tipo de Documento : CE
+Rol : Empleado,
+Telefono 1 : 512512, Casa
+Telefono 2 : 3124351256, Móvil
+Direccion 1 : Diagonal 15, otroBarrio, otraCiudad
