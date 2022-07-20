@@ -932,6 +932,9 @@ public class DirectorioGUI extends JFrame {
                     botonesDesplazamiento();
                 }    
             }
+            if (e.getSource() == btnEliminar) {
+                miDirectorio.eliminarPersona(numArchivo);
+            }
         }
 
         @Override
