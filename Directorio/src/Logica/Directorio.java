@@ -29,7 +29,6 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
  */
 public class Directorio {
     private ArrayList<Archivo> archivos;
-    private Archivo archivoPersona;
 
     public Directorio() {
       archivos = new ArrayList<>();
