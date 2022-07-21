@@ -1,8 +1,0 @@
-Nombre : Luis
-Apellidos : Munoz
-Fecha de Nacimiento : 04/06/1999
-ID : 10003123
-Tipo de Documento : CC
-Rol : Profesor,
-Telefono 1 : 123414, Casa
-Direccion 1 : calle 15, unBarrio, unaCiudad

@@ -204,8 +204,21 @@ public class Directorio {
         
     }
     
-    private void eliminarPersona(){
-        
+    public void eliminarPersona(int archivo) {
+        archivos.get(archivo).getArchivo().delete();
+        archivos.remove(archivo);
+        for (int i = 0; i < archivos.size(); i++) {
+            File auxFile = new File("src/archivos/persona_"+(i+1)+".txt");
+            archivos.get(i).renombrarArchivo(auxFile);
+            /*if (i > archivo) {
+                File auxFile = new File("src/archivos/persona_" + (i  - 1) + ".txt");
+                archivos.get(i).renombrarArchivo(auxFile);
+            }else{
+                File auxFile = new File("src/archivos/persona_" + (i+1) + ".txt");
+                archivos.get(i).renombrarArchivo(auxFile);
+            }*/
+        }
+        verificarArchivos();
     }
     
     private void mostrarLista(){

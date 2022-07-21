@@ -329,7 +329,9 @@ public class DirectorioGUI extends JFrame {
         if(miDirectorio.getArchivos().size() != 1){
             btnContactoSiguiente.setEnabled(true);
         }
-        mostrarPersona();
+        if(miDirectorio.getArchivos().size() != 0){
+            mostrarPersona();
+        }
         botonesDesplazamiento();
     }
     
@@ -773,7 +775,7 @@ public class DirectorioGUI extends JFrame {
                         
                         try {
                             miDirectorio.agregarPersona(personaAux);
-                            JOptionPane.showMessageDialog(null, 
+                            JOptionPane.showMessageDialog(rootPane, 
                                 ("El contacto " + txtNombres.getText() + " ha sido añadido con exito") ,
                                 "Nuevo Contacto",
                                 INFORMATION_MESSAGE);
@@ -784,9 +786,12 @@ public class DirectorioGUI extends JFrame {
                             auxDirecciones = new ArrayList<>();
                             auxDirecciones.add(new Direccion());
                             numDireccion = 0;
-                            btnContactoAnterior.setEnabled(true);
+                            if(miDirectorio.getArchivos().size() != 1){
+                                btnContactoAnterior.setEnabled(true);
+                            }
                             numArchivo = miDirectorio.getArchivos().size() -1;
                             mostrarPersona();
+                            btnEliminar.setText("Eliminar");
                             nuevo = false;
                         } catch (IOException ex) {
                             Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -795,11 +800,47 @@ public class DirectorioGUI extends JFrame {
                     }
                 }
             }
-            if(e.getSource() == btnEliminar){
+            if(e.getSource() == btnEliminar){             
+                System.out.println(miDirectorio.getArchivos().size());
+                System.out.println(numArchivo);
+                if(btnEliminar.getText().equals("Eliminar")){
+                    String[] opciones = {"Si","No"};
+                    int i = JOptionPane.showOptionDialog(rootPane, 
+                            "Desea eliminar a " + txtNombres.getText() + "?", 
+                            "Eliminiar Contacto", 
+                            JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null,
+                            opciones,
+                            opciones[0]);
+                    if(i == 0){
+                        miDirectorio.eliminarPersona(numArchivo);
+                        if(numArchivo == 0){
+                            if(miDirectorio.getArchivos().isEmpty()){
+                                reestablecerCampos();
+                                btnContactoAnterior.setEnabled(false);
+                                btnContactoSiguiente.setEnabled(false);
+                            }
+                        }
+                        else{
+                            if(numArchivo == miDirectorio.getArchivos().size()){
+                                numArchivo -=1;
+                                try {
+                                    mostrarPersona();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                lblNumeroContacto.setText(""+(numArchivo+1));
+                                botonesDesplazamiento();
+                            }
+                        }
+                        JOptionPane.showMessageDialog(rootPane, "El contacto ha sido eliminado");
+                    }
+                }
                 if(btnEliminar.getText().equals("Cancelar")){
                     if(nuevo){
                         String[] opciones = {"Si","No"};
-                        int i = JOptionPane.showOptionDialog(null, 
+                        int i = JOptionPane.showOptionDialog(rootPane, 
                                 "Desea cancelar la creacion del contacto?", 
                                 "Nuevo Contacto - Cancelar", 
                                 JOptionPane.YES_NO_CANCEL_OPTION,
@@ -891,45 +932,55 @@ public class DirectorioGUI extends JFrame {
                 }
             }
             if(e.getSource() == btnContactoAnterior){
-                if(!nuevo){
-                    if(numArchivo != 0){
-                        numArchivo -= 1;
-                        lblNumeroContacto.setText("" + (numArchivo+1));
-                        btnContactoSiguiente.setEnabled(true);
-                        if(numArchivo == 0){
+                if(!miDirectorio.getArchivos().isEmpty()){
+                    if(!nuevo){
+                        if(numArchivo != 0){
+                            numArchivo -= 1;
+                            lblNumeroContacto.setText("" + (numArchivo+1));
+                            btnContactoSiguiente.setEnabled(true);
+                            if(numArchivo == 0){
+                                btnContactoAnterior.setEnabled(false);
+                            }
+                        }else{
                             btnContactoAnterior.setEnabled(false);
                         }
-                    }else{
-                        btnContactoAnterior.setEnabled(false);
+                        try {
+                            mostrarPersona();
+                            lblDireccion.setText("Dirección "+(numDireccion+1));
+                        } catch (IOException ex) {
+                            Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        botonesDesplazamiento();
                     }
-                    try {
-                        mostrarPersona();
-                        lblDireccion.setText("Dirección "+(numDireccion+1));
-                    } catch (IOException ex) {
-                        Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    botonesDesplazamiento();
+                }
+                else{
+                    btnContactoAnterior.setEnabled(false);
                 }
             }
             if(e.getSource() == btnContactoSiguiente){
                 if(!nuevo){
-                    if(numArchivo != miDirectorio.getArchivos().size()-1){
-                        numArchivo += 1;
-                        lblNumeroContacto.setText("" + (numArchivo+1));
-                        btnContactoAnterior.setEnabled(true);
-                        if(numArchivo == miDirectorio.getArchivos().size()-1){
-                            btnContactoSiguiente.setEnabled(false);
-                        }
-                    }else{
+                    if(miDirectorio.getArchivos().isEmpty()){
                         btnContactoSiguiente.setEnabled(false);
                     }
-                    try {
-                        mostrarPersona();
-                        lblDireccion.setText("Dirección "+(numDireccion+1));
-                    } catch (IOException ex) {
-                        Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    else{
+                        if(numArchivo != miDirectorio.getArchivos().size()-1 && numArchivo < miDirectorio.getArchivos().size()-1){
+                            numArchivo += 1;
+                            lblNumeroContacto.setText("" + (numArchivo+1));
+                            btnContactoAnterior.setEnabled(true);
+                            if(numArchivo == miDirectorio.getArchivos().size()-1){
+                                btnContactoSiguiente.setEnabled(false);
+                            }
+                        }else{
+                            btnContactoSiguiente.setEnabled(false);
+                        }
+                        try {
+                            mostrarPersona();
+                            lblDireccion.setText("Dirección "+(numDireccion+1));
+                        } catch (IOException ex) {
+                            Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        botonesDesplazamiento();
                     }
-                    botonesDesplazamiento();
                 }    
             }
         }

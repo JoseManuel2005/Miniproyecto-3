@@ -1,11 +1,10 @@
-Nombre : Mauricio
-Apellidos : Munoz Gutierrez
-Fecha de Nacimiento : Munoz Gutierrez
-ID : 1005982131
+Nombre : prueba1
+Apellidos : apellido1
+Fecha de Nacimiento : prueba1
+ID : 1234
 Tipo de Documento : CC
 Rol : Estudiante,
-Telefono 1 : 31312341, Móvil
-Telefono 2 : 52141321, Casa
-Telefono 3 : 52323534, Trabajo
-Direccion 1 : carrera, santa anita, cali
-Direccion 2 : calle aae, manin, palmira
+Telefono 1 : 1234, Casa
+Direccion 1 : prueba1, prueba1, prueba1
+Direccion 2 : prueba1, prueba1, prueba1
+Direccion 3 : prueba1, prueba1, prueba1

@@ -1,8 +1,0 @@
-Nombre : juanito
-Apellidos : Caicedo Jimenez
-Fecha de Nacimiento : 04/15/1977
-ID : 12344
-Tipo de Documento : CC
-Rol : Profesor,
-Telefono 1 : 12345, Móvil
-Direccion 1 : calle 20 #15-2, La alegria, Venecia

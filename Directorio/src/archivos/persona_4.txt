@@ -1,9 +1,0 @@
-Nombre : Pepe
-Apellidos : Rodrigez Paz
-Fecha de Nacimiento : 06/903/1978
-ID : 123414
-Tipo de Documento : CE
-Rol : Empleado,
-Telefono 1 : 512512, Casa
-Telefono 2 : 3124351256, Móvil
-Direccion 1 : Diagonal 15, otroBarrio, otraCiudad

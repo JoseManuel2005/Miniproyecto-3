@@ -1,8 +1,9 @@
-Nombre : Alejandro
-Apellidos : Munoz
-Fecha de Nacimiento : 08/09/2003
-ID : 103123
+Nombre : prueba2
+Apellidos : apellidos2
+Fecha de Nacimiento : prueba2
+ID : 5678
 Tipo de Documento : CC
-Rol : Estudiante,
-Telefono 1 : 12313, Móvil
-Direccion 1 : carrera, Tequendama, Cali
+Rol : Profesor,
+Telefono 1 : 5678, Casa
+Direccion 1 : prueba2, prueba2, prueba2
+Direccion 2 : prueab2, prueab2, prueba2

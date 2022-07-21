@@ -24,5 +24,8 @@ public class Archivo {
     public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
-     
+    
+    public void renombrarArchivo(File archivo){
+        this.archivo.renameTo(archivo);
+    }
 }
