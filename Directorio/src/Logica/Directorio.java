@@ -17,12 +17,17 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 /**
- *
- * @author mauricio.munoz
+ * @author Mauricio Munoz Gutierrez
+ * @author Jose Manuel Palma Oquedno
+ * 
+ * Profesor Luis Johany Romo Portilla
+ * 
+ * Fundamentos de Programacion Orientada por Eventos
+ * Grupo 1
+ * 
+ * Miniproyecto 3
  */
 public class Directorio {
-    
-    //private ArrayList<Persona> personas;
     private ArrayList<Archivo> archivos;
     private Archivo archivoPersona;
 
@@ -119,9 +124,9 @@ public class Directorio {
                 }
                 else if(linea.contains("Direccion "+auxNumDir)){
                     Direccion auxDir = new Direccion();
-                    String auxStr = linea;//.substring(linea.indexOf(":")+2); //Cadena despues de los dos puntos
-                    String auxStr2 = linea.substring(linea.indexOf(",")+2); //Cadena despues de la primera coma
-                    String auxStr3 = linea.substring(auxStr2.indexOf(",")+2); //Cadena despues de la segunda coma
+                    String auxStr = linea;
+                    String auxStr2 = linea.substring(linea.indexOf(",")+2); 
+                    String auxStr3 = linea.substring(auxStr2.indexOf(",")+2);
                     
                     String auxDireccion = auxStr.substring(14,linea.indexOf(","));
                     String auxBarrio = auxStr2.substring(0,auxStr2.indexOf(","));
@@ -184,7 +189,7 @@ public class Directorio {
             i++;
         }
         i = 1;
-        for(Direccion direccion : persona.getDirreciones()){
+        for(Direccion direccion : persona.getDirecciones()){
             pw.println("Direccion " + i + " : " + 
                     direccion.getDireccion() + ", " +
                     direccion.getBarrio() + ", " +
@@ -200,8 +205,58 @@ public class Directorio {
         verificarArchivos();
     }
     
-    private void actualizarPersona(){
+    public void actualizarPersona(int archivo, Persona persona) throws IOException{
+        if(archivos.get(archivo).getArchivo().exists()){
+            FileWriter archivoTexto = new FileWriter("src/archivos/persona_" + 
+                (archivo+1) + ".txt");
         
+            PrintWriter pw = new PrintWriter(archivoTexto);
+
+            pw.println("Nombre : " + persona.getNombre());
+            pw.println("Apellidos : " + persona.getApellidos());
+            pw.println("Fecha de Nacimiento : " + persona.getFecha());
+            pw.println("ID : " + persona.getId());
+            pw.println("Tipo de Documento : " + persona.getIdTipo());
+            String auxStr = "";
+            for(Map.Entry<String, Boolean> entry : persona.getContacto().entrySet()){
+                if(entry.getKey().equals("Estudiante")){
+                    if(entry.getValue()){
+                        auxStr += "Estudiante,";
+                    }
+                }
+                if(entry.getKey().equals("Profesor")){
+                    if(entry.getValue()){
+                        auxStr += "Profesor,";
+                    }
+                }   
+                if(entry.getKey().equals("Empleado")){
+                    if(entry.getValue()){
+                        auxStr += "Empleado,";
+                    }
+                }   
+            }
+            pw.println("Rol : " + auxStr);
+            int i = 1;
+            for(Telefono telefono : persona.getTelefonos()){
+                pw.println("Telefono " + i + " : " + telefono.getNumero() + ", " + telefono.getTipo());
+                i++;
+            }
+            i = 1;
+            for(Direccion direccion : persona.getDirecciones()){
+                pw.println("Direccion " + i + " : " + 
+                        direccion.getDireccion() + ", " +
+                        direccion.getBarrio() + ", " +
+                        direccion.getCiudad());
+                i++;
+            }
+            try {
+               if ( archivoTexto != null)
+                  archivoTexto.close();
+            } catch (IOException e2) {
+                  e2.printStackTrace();
+            }
+            verificarArchivos();
+        }
     }
     
     public void eliminarPersona(int archivo) {
@@ -213,19 +268,54 @@ public class Directorio {
         verificarArchivos();
     }
     
-    private void mostrarLista(){
+    public void mostrarLista(){
         
     }
     
-    private void actualizarVentana(){
+    public void crearArchivoPlano() throws IOException{
+        Persona pr = new Persona();
+        FileWriter archivoTexto = new FileWriter("src/archivos/contactos.txt");
+        PrintWriter pw = new PrintWriter(archivoTexto);
         
-    }
-    
-    private void crearArchivoPlano(){
-        
-    }
-    
-    private void generarBkp(){
-        
-    }    
+        String linea = "";
+        for(int i = 0; i < archivos.size();i++){
+            pr = sacarInfoDeArchivo(i);
+            
+            linea = pr.getNombre() + ";"
+                + pr.getApellidos() + ";"
+                + pr.getFecha() + ";"
+                + pr.getId() + ";"
+                + pr.getIdTipo() + ";"
+                + pr.getTelefonos().get(0).getNumero() + ";"
+                + pr.getTelefonos().get(0).getTipo()+ ";"
+                + pr.getDirecciones().get(0).getDireccion() + ";"
+                + pr.getDirecciones().get(0).getBarrio() + ";"
+                + pr.getDirecciones().get(0).getCiudad() + ";";
+            
+            for(Map.Entry<String, Boolean> entry : pr.getContacto().entrySet()){
+                if(entry.getKey().equals("Estudiante")){
+                    if(entry.getValue()){
+                        linea += "Estudiante;";
+                    }
+                }
+                if(entry.getKey().equals("Profesor")){
+                    if(entry.getValue()){
+                        linea += "Profesor;";
+                    }
+                }   
+                if(entry.getKey().equals("Empleado")){
+                    if(entry.getValue()){
+                        linea += "Empleado";
+                    }
+                }   
+            }    
+            pw.println(linea);
+        }
+        try {
+            if ( archivoTexto != null)
+                archivoTexto.close();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+    }   
 }

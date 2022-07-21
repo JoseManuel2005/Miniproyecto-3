@@ -1,0 +1,2 @@
+prueba1;apellido1;prueba1;1234;CC;1234;Casa;prueba1;prueba1;prueba1;Estudiante;
+prueba2;apellidos2;prueba2;5678;CC;5678;Casa;prueba2;prueba2;prueba2;Profesor;

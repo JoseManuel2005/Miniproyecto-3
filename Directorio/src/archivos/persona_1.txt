@@ -1,10 +1,9 @@
-Nombre : prueba1
-Apellidos : apellido1
-Fecha de Nacimiento : prueba1
-ID : 1234
+Nombre : Mauricio
+Apellidos : Munoz Gutierrez
+Fecha de Nacimiento : 09/08/2003
+ID : 12345
 Tipo de Documento : CC
 Rol : Estudiante,
-Telefono 1 : 1234, Casa
-Direccion 1 : prueba1, prueba1, prueba1
-Direccion 2 : prueba1, prueba1, prueba1
-Direccion 3 : prueba1, prueba1, prueba1
+Telefono 1 : 12343, Casa
+Direccion 1 : direccionNuevo, barrioBuevo, ciudadNuevo
+Direccion 2 : a,  v, c

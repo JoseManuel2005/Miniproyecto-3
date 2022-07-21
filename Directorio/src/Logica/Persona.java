@@ -9,8 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
- * @author Usuario
+ * @author Mauricio Munoz Gutierrez
+ * @author Jose Manuel Palma Oquedno
+ * 
+ * Profesor Luis Johany Romo Portilla
+ * 
+ * Fundamentos de Programacion Orientada por Eventos
+ * Grupo 1
+ * 
+ * Miniproyecto 3
  */
 public class Persona {
     private String nombre;
@@ -56,7 +63,7 @@ public class Persona {
         return idTipo;
     }
 
-    public ArrayList<Direccion> getDirreciones() {
+    public ArrayList<Direccion> getDirecciones() {
         return direcciones;
     }
 

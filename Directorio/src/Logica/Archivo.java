@@ -7,8 +7,15 @@ package Logica;
 import java.io.*;
 
 /**
- *
- * @author Usuario
+ * @author Mauricio Munoz Gutierrez
+ * @author Jose Manuel Palma Oquedno
+ * 
+ * Profesor Luis Johany Romo Portilla
+ * 
+ * Fundamentos de Programacion Orientada por Eventos
+ * Grupo 1
+ * 
+ * Miniproyecto 3
  */
 public class Archivo {
     private File archivo;
