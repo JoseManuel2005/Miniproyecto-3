@@ -983,6 +983,9 @@ public class DirectorioGUI extends JFrame {
                     }
                 }    
             }
+            if (e.getSource() == btnEliminar) {
+                miDirectorio.eliminarPersona(numArchivo);
+            }
         }
 
         @Override
