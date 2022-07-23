@@ -4,6 +4,8 @@
  */
 package Logica;
 
+import java.io.Serializable;
+
 /**
  * @author Mauricio Munoz Gutierrez
  * @author Jose Manuel Palma Oquedno
@@ -15,7 +17,7 @@ package Logica;
  * 
  * Miniproyecto 3
  */
-public class Telefono {
+public class Telefono implements Serializable{
     private long numero;
     private String tipo;
 

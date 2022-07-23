@@ -69,6 +69,7 @@ public class DirectorioGUI extends JFrame {
     private JButton btnEliminar;
     private JButton btnExportarContactos;
     private JButton btnBkp;
+    private JButton btnGenerarBkp;
     private JButton btnDireccionAnterior;
     private JButton btnDireccionSiguiente;
     private JButton btnAddDireccion;
@@ -169,6 +170,7 @@ public class DirectorioGUI extends JFrame {
         btnActualizar = new JButton("Actualizar");
         btnEliminar = new JButton("Eliminar");
         btnExportarContactos = new JButton("Exportar contactos");
+        btnGenerarBkp = new JButton("Crear copia");
         btnBkp = new JButton("Recuperar contactos");
         
         btnContactoAnterior = new JButton("Anterior");
@@ -295,6 +297,7 @@ public class DirectorioGUI extends JFrame {
         pnel4.add(btnActualizar);
         pnel4.add(btnEliminar);
         pnel4.add(btnExportarContactos);
+        pnel4.add(btnGenerarBkp);
         pnel4.add(btnBkp);
         pnel4.setBorder(BorderFactory.createTitledBorder(null, 
                 "Opciones", 
@@ -323,6 +326,8 @@ public class DirectorioGUI extends JFrame {
         btnActualizar.addMouseListener(new ManejadorDeEventos());
         btnEliminar.addMouseListener(new ManejadorDeEventos());
         btnExportarContactos.addMouseListener(new ManejadorDeEventos());
+        btnGenerarBkp.addMouseListener(new ManejadorDeEventos());
+        btnBkp.addMouseListener(new ManejadorDeEventos());
         btnAddDireccion.addMouseListener(new ManejadorDeEventos());
         btnDelDireccion.addMouseListener(new ManejadorDeEventos());
         btnDireccionAnterior.addMouseListener(new ManejadorDeEventos());
@@ -396,8 +401,8 @@ public class DirectorioGUI extends JFrame {
         btnActualizar.setEnabled(estado);
         btnEliminar.setEnabled(estado);
         btnExportarContactos.setEnabled(estado);
+        btnGenerarBkp.setEnabled(estado);
         btnBkp.setEnabled(estado);
-
     }
     
     private boolean verificarCampos(){
@@ -904,10 +909,9 @@ public class DirectorioGUI extends JFrame {
                             actualizar = true;
                             btnActualizar.setText("Aceptar");
                             btnEliminar.setText("Cancelar");
-                            btnAgregar.setEnabled(false);
-                            btnExportarContactos.setEnabled(false);
-                            btnBkp.setEnabled(false);
-
+                            habilitarOpciones(false);
+                            btnActualizar.setEnabled(true);
+                            btnEliminar.setEnabled(true);
                             habilitarCampos(true);
                             botonesDesplazamiento();
                             btnContactoAnterior.setEnabled(false);
@@ -962,6 +966,35 @@ public class DirectorioGUI extends JFrame {
                         Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+            }
+            if(e.getSource() == btnGenerarBkp){
+                try {
+                    miDirectorio.generarBkp();
+                    JOptionPane.showMessageDialog(rootPane, "El Backup se ha creado exitosamente.");
+                } catch (IOException ex) {
+                    Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(e.getSource() == btnBkp){
+                /*
+                
+                Toca verificar primero si existe bkp.bin, de lo contrario mostrar un mensaje diciendo que no existe
+                
+                */
+                String[] opciones = {"Si","No"};
+                int i = JOptionPane.showOptionDialog(rootPane, 
+                        "Desea restaurar los contactos de la copia de seguridad?\\n"
+                                + "Al hacerlo perderá todos los contactos actuales", 
+                        "Restaurar información", 
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]);
+                if(i == 0){
+                    // Se restauran, cualquier otra opcion no hace nada.
+                }
+                
             }
             if(e.getSource() == btnAddDireccion){
                 if(nuevo || actualizar){

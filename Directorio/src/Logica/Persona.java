@@ -4,6 +4,7 @@
  */
 package Logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
  * 
  * Miniproyecto 3
  */
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private String apellidos;
     private String fecha;

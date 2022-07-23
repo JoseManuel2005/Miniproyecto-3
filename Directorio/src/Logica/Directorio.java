@@ -6,10 +6,13 @@ package Logica;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +30,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
  * 
  * Miniproyecto 3
  */
-public class Directorio {
+public class Directorio implements Serializable{
     private ArrayList<Archivo> archivos;
 
     public Directorio() {
@@ -266,5 +269,24 @@ public class Directorio {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
-    }   
+    }
+    
+    public void generarBkp() throws IOException{
+        File archivoBin = new File("src/bkp/bkp.data");
+        
+        try{
+            FileOutputStream fos = new FileOutputStream("src/bkp/bkp.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+          
+            Persona auxPersona;
+            for(int i = 0; i < archivos.size();i++){
+                auxPersona = sacarInfoDeArchivo(i);
+                oos.writeObject(auxPersona);
+            }
+            oos.close();
+            fos.close();
+        }catch(Exception e){
+            System.out.println("Error");
+        }
+    }
 }

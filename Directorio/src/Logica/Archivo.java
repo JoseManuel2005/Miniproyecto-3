@@ -17,7 +17,7 @@ import java.io.*;
  * 
  * Miniproyecto 3
  */
-public class Archivo {
+public class Archivo implements Serializable{
     private File archivo;
 
     public Archivo(File archivo) {
