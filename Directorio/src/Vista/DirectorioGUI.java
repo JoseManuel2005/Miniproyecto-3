@@ -67,8 +67,8 @@ public class DirectorioGUI extends JFrame {
     private JButton btnAgregar;
     private JButton btnActualizar;
     private JButton btnEliminar;
-    private JButton btnListar;
     private JButton btnExportarContactos;
+    private JButton btnBkp;
     private JButton btnDireccionAnterior;
     private JButton btnDireccionSiguiente;
     private JButton btnAddDireccion;
@@ -88,13 +88,13 @@ public class DirectorioGUI extends JFrame {
 
     Container contenedorPpal;
     
-    Persona personaAux;
-    Directorio miDirectorio;
-    ArrayList <Direccion> auxDirecciones;
-    int numDireccion;
-    int numArchivo;
-    boolean nuevo;
-    boolean actualizar;
+    private Persona personaAux;
+    private Directorio miDirectorio;
+    private ArrayList <Direccion> auxDirecciones;
+    private int numDireccion;
+    private int numArchivo;
+    private boolean nuevo;
+    private boolean actualizar;
 
     public DirectorioGUI() throws IOException {
         iniciarComponentes();
@@ -168,8 +168,8 @@ public class DirectorioGUI extends JFrame {
         btnAgregar = new JButton("Nuevo");
         btnActualizar = new JButton("Actualizar");
         btnEliminar = new JButton("Eliminar");
-        btnListar = new JButton("Listar");
         btnExportarContactos = new JButton("Exportar contactos");
+        btnBkp = new JButton("Recuperar contactos");
         
         btnContactoAnterior = new JButton("Anterior");
         lblNumeroContacto = new JLabel("" + (numArchivo + 1));
@@ -294,8 +294,8 @@ public class DirectorioGUI extends JFrame {
         pnel4.add(btnAgregar);
         pnel4.add(btnActualizar);
         pnel4.add(btnEliminar);
-        pnel4.add(btnListar);
         pnel4.add(btnExportarContactos);
+        pnel4.add(btnBkp);
         pnel4.setBorder(BorderFactory.createTitledBorder(null, 
                 "Opciones", 
                 TitledBorder.DEFAULT_JUSTIFICATION, 
@@ -333,7 +333,7 @@ public class DirectorioGUI extends JFrame {
         txtTelefono2.addKeyListener(new ManejadorDeEventos());
         txtTelefono3.addKeyListener(new ManejadorDeEventos());
         
-        deshabilitarCampos();
+        habilitarCampos(false);
         if(miDirectorio.getArchivos().size() != 1){
             btnContactoSiguiente.setEnabled(true);
         }
@@ -344,6 +344,8 @@ public class DirectorioGUI extends JFrame {
             btnEliminar.setEnabled(false);
             btnActualizar.setEnabled(false);
         }
+        cBoxTelefono2.setEnabled(false);
+        cBoxTelefono3.setEnabled(false);
         botonesDesplazamiento();
     }
     
@@ -354,88 +356,48 @@ public class DirectorioGUI extends JFrame {
         c.gridheight = y; //Cuantas filas ocupa
         c.weightx = wx; //Tamano en x
         c.weighty = wy; // Tamano en y
-    }
+    }  
     
-    private void deshabilitarCampos(){
-        txtNombres.setEnabled(false);
-        txtApellidos.setEnabled(false);
-        txtFechaNacimiento.setEnabled(false);
-        txtId.setEnabled(false);
-        cBoxTipoId.setEnabled(false);
-        chkEstudiante.setEnabled(false);
-        chkProfesor.setEnabled(false);
-        chkEmpleado.setEnabled(false);
+    private void habilitarCampos(boolean estado){
+        txtNombres.setEnabled(estado);
+        txtApellidos.setEnabled(estado);
+        txtFechaNacimiento.setEnabled(estado);
+        txtId.setEnabled(estado);
+        cBoxTipoId.setEnabled(estado);
+        chkEstudiante.setEnabled(estado);
+        chkProfesor.setEnabled(estado);
+        chkEmpleado.setEnabled(estado);
         
-        txtTelefono1.setEnabled(false);
-        txtTelefono2.setEnabled(false);
-        txtTelefono3.setEnabled(false);
-        cBoxTelefono1.setEnabled(false);
-        cBoxTelefono2.setEnabled(false);
-        cBoxTelefono3.setEnabled(false);
-        
-        txtDireccion.setEnabled(false);
-        txtBarrio.setEnabled(false);
-        txtCiudad.setEnabled(false);
-        btnDireccionAnterior.setEnabled(false);
-        btnDireccionSiguiente.setEnabled(false);
-        btnAddDireccion.setEnabled(false);
-        btnDelDireccion.setEnabled(false);
-        
-        btnContactoAnterior.setEnabled(false);
-        btnContactoSiguiente.setEnabled(false);
-    }
-    
-    private void habilitarCampos(){
-        txtNombres.setEnabled(true);
-        txtApellidos.setEnabled(true);
-        txtFechaNacimiento.setEnabled(true);
-        txtId.setEnabled(true);
-        cBoxTipoId.setEnabled(true);
-        chkEstudiante.setEnabled(true);
-        chkProfesor.setEnabled(true);
-        chkEmpleado.setEnabled(true);
-        
-        txtTelefono1.setEnabled(true);
-        txtTelefono2.setEnabled(true);
-        txtTelefono3.setEnabled(true);
-        cBoxTelefono1.setEnabled(true);
+        txtTelefono1.setEnabled(estado);
+        txtTelefono2.setEnabled(estado);
+        txtTelefono3.setEnabled(estado);
+        cBoxTelefono1.setEnabled(estado);
         if(txtTelefono2.getText().length() > 0){
-            cBoxTelefono2.setEnabled(true);
+            cBoxTelefono2.setEnabled(estado);
         }
         if(txtTelefono3.getText().length() > 0){
-            cBoxTelefono3.setEnabled(true);
+            cBoxTelefono3.setEnabled(estado);
         }
                 
-        txtDireccion.setEnabled(true);
-        txtBarrio.setEnabled(true);
-        txtCiudad.setEnabled(true);
-        btnDireccionAnterior.setEnabled(true);
-        btnDireccionSiguiente.setEnabled(true);
-        btnAddDireccion.setEnabled(true);
-        btnDelDireccion.setEnabled(true);
+        txtDireccion.setEnabled(estado);
+        txtBarrio.setEnabled(estado);
+        txtCiudad.setEnabled(estado);
+        btnDireccionAnterior.setEnabled(estado);
+        btnDireccionSiguiente.setEnabled(estado);
+        btnAddDireccion.setEnabled(estado);
+        btnDelDireccion.setEnabled(estado);
         
-        btnContactoAnterior.setEnabled(true);
-        btnContactoSiguiente.setEnabled(true);
+        btnContactoAnterior.setEnabled(estado);
+        btnContactoSiguiente.setEnabled(estado);
     }
     
-    private void habilitarOpciones(){
-        btnAgregar.setEnabled(true);
-        btnActualizar.setEnabled(true);
-        btnEliminar.setEnabled(true);
-        btnListar.setEnabled(true);
-        btnExportarContactos.setEnabled(true);
-        btnContactoAnterior.setEnabled(true);
-        btnContactoSiguiente.setEnabled(true);
-    }
-    
-    private void deshabilitarOpciones(){
-        btnAgregar.setEnabled(false);
-        btnActualizar.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        btnListar.setEnabled(false);
-        btnExportarContactos.setEnabled(false);
-        btnContactoAnterior.setEnabled(false);
-        btnContactoSiguiente.setEnabled(false);
+    private void habilitarOpciones(boolean estado){
+        btnAgregar.setEnabled(estado);
+        btnActualizar.setEnabled(estado);
+        btnEliminar.setEnabled(estado);
+        btnExportarContactos.setEnabled(estado);
+        btnBkp.setEnabled(estado);
+
     }
     
     private boolean verificarCampos(){
@@ -684,21 +646,73 @@ public class DirectorioGUI extends JFrame {
             btnDireccionSiguiente.setEnabled(false);
         }
         if(miDirectorio.getArchivos().size() > 1){
-        if(numArchivo+1 == 1){
+            if(!nuevo && !actualizar){
+                if(numArchivo+1 == 1){
+                    btnContactoAnterior.setEnabled(false);
+                    btnContactoSiguiente.setEnabled(true);
+                }
+                else if (numArchivo == miDirectorio.getArchivos().size()-1){
+                    btnContactoAnterior.setEnabled(true);
+                    btnContactoSiguiente.setEnabled(false);
+                }else{
+                    btnContactoAnterior.setEnabled(true);
+                    btnContactoSiguiente.setEnabled(true);
+                }
+            }
+            else{
                 btnContactoAnterior.setEnabled(false);
-                btnContactoSiguiente.setEnabled(true);
-            }
-            else if (numArchivo == miDirectorio.getArchivos().size()-1){
-                btnContactoAnterior.setEnabled(true);
                 btnContactoSiguiente.setEnabled(false);
-            }else{
-                btnContactoAnterior.setEnabled(true);
-                btnContactoSiguiente.setEnabled(true);
             }
-        }else{
+        }
+        else{
             btnContactoAnterior.setEnabled(false);
             btnContactoSiguiente.setEnabled(false);
         }
+    }
+    
+    public void obtenerDatos(){
+        personaAux = new Persona();
+        Map<String,Boolean> tipoContactoAux;
+        tipoContactoAux = new HashMap<>();
+        tipoContactoAux.put("Estudiante",false);
+        tipoContactoAux.put("Profesor",false);
+        tipoContactoAux.put("Empleado",false);
+
+        personaAux.setNombre(txtNombres.getText());
+        personaAux.setApellidos(txtApellidos.getText());
+        personaAux.setFecha(txtFechaNacimiento.getText());
+        personaAux.setId(Long.parseLong(txtId.getText()));
+        personaAux.setIdTipo(cBoxTipoId.getSelectedItem().toString());
+        if(chkEstudiante.isSelected()){
+            tipoContactoAux.replace("Estudiante",true);
+        }
+        if(chkProfesor.isSelected()){
+            tipoContactoAux.replace("Profesor",true);
+        }
+        if(chkEmpleado.isSelected()){
+            tipoContactoAux.replace("Empleado",true);
+        }
+        personaAux.setContacto(tipoContactoAux);
+
+        Telefono auxTel = new Telefono();
+        ArrayList<Telefono> auxTels = new ArrayList<>();
+        auxTel.setNumero(Long.parseLong(txtTelefono1.getText()));
+        auxTel.setTipo((cBoxTelefono1.getSelectedItem().toString()));
+        auxTels.add(auxTel);
+        if(!txtTelefono2.getText().equals("")){
+            Telefono auxTel2 = new Telefono();
+            auxTel2.setNumero(Long.parseLong(txtTelefono2.getText()));
+            auxTel2.setTipo(cBoxTelefono2.getSelectedItem().toString());
+            auxTels.add(auxTel2);
+        }
+        if(!txtTelefono3.getText().equals("")){
+        Telefono auxTel3 = new Telefono();
+            auxTel3.setNumero(Long.parseLong(txtTelefono3.getText()));
+            auxTel3.setTipo(cBoxTelefono3.getSelectedItem().toString());
+            auxTels.add(auxTel3);
+        }
+        personaAux.setTelefonos(auxTels);
+        personaAux.setDirecciones(auxDirecciones);
     }
     
     public class ManejadorDeEventos implements MouseListener, KeyListener{
@@ -711,100 +725,59 @@ public class DirectorioGUI extends JFrame {
         @Override
         public void mousePressed(MouseEvent e) {
             if(e.getSource() == btnAgregar){
-                if(btnAgregar.getText().equals("Nuevo")){
-                    nuevo = true;
-                    auxDirecciones = new ArrayList<>();
-                    auxDirecciones.add(new Direccion());
-                    numDireccion = 0;
-                    numArchivo = miDirectorio.getArchivos().size()+1;
-                    lblNumeroContacto.setText("" + (numArchivo));
-                    habilitarCampos();
-                    btnAgregar.setText("Agregar");
-                    deshabilitarOpciones();
-                    btnAgregar.setEnabled(true);
-                    btnDireccionAnterior.setEnabled(false);
-                    btnDireccionSiguiente.setEnabled(false);
-                    btnContactoAnterior.setEnabled(false);
-                    btnContactoSiguiente.setEnabled(false);
-                    btnDelDireccion.setEnabled(false);
-                    txtTelefono3.setEnabled(false);
-                    cBoxTelefono3.setEnabled(false);
-                    cBoxTelefono2.setEnabled(false);
-                    reestablecerCampos();
-                    btnEliminar.setText("Cancelar");
-                    btnEliminar.setEnabled(true);
-                }
-                else if (btnAgregar.getText().equals("Agregar")){
-                    reestablecerColores();
-                    auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
-                    auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
-                    auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
-                    
-                    if(!verificarCampos()){
-                        Map<String,Boolean> tipoContactoAux;
-                        tipoContactoAux = new HashMap<>();
-                        tipoContactoAux.put("Estudiante",false);
-                        tipoContactoAux.put("Profesor",false);
-                        tipoContactoAux.put("Empleado",false);
-                        
-                        personaAux.setNombre(txtNombres.getText());
-                        personaAux.setApellidos(txtApellidos.getText());
-                        personaAux.setFecha(txtFechaNacimiento.getText());
-                        personaAux.setId(Long.parseLong(txtId.getText()));
-                        personaAux.setIdTipo(cBoxTipoId.getSelectedItem().toString());
-                        if(chkEstudiante.isSelected()){
-                            tipoContactoAux.replace("Estudiante",true);
-                        }
-                        if(chkProfesor.isSelected()){
-                            tipoContactoAux.replace("Profesor",true);
-                        }
-                        if(chkEmpleado.isSelected()){
-                            tipoContactoAux.replace("Empleado",true);
-                        }
-                        personaAux.setContacto(tipoContactoAux);
-                        
-                        Telefono auxTel = new Telefono();
-                        ArrayList<Telefono> auxTels = new ArrayList<>();
-                        auxTel.setNumero(Long.parseLong(txtTelefono1.getText()));
-                        auxTel.setTipo((cBoxTelefono1.getSelectedItem().toString()));
-                        auxTels.add(auxTel);
-                        if(!txtTelefono2.getText().equals("")){
-                            Telefono auxTel2 = new Telefono();
-                            auxTel2.setNumero(Long.parseLong(txtTelefono2.getText()));
-                            auxTel2.setTipo(cBoxTelefono2.getSelectedItem().toString());
-                            auxTels.add(auxTel2);
-                        }
-                        if(!txtTelefono3.getText().equals("")){
-                            Telefono auxTel3 = new Telefono();
-                            auxTel3.setNumero(Long.parseLong(txtTelefono3.getText()));
-                            auxTel3.setTipo(cBoxTelefono3.getSelectedItem().toString());
-                            auxTels.add(auxTel3);
-                        }
-                        personaAux.setTelefonos(auxTels);
-                        personaAux.setDirecciones(auxDirecciones);
-                        
-                        try {
-                            miDirectorio.agregarPersona(personaAux);
-                            JOptionPane.showMessageDialog(rootPane, 
-                                ("El contacto " + txtNombres.getText() + " ha sido añadido con exito") ,
-                                "Nuevo Contacto",
-                                INFORMATION_MESSAGE);
-                            reestablecerCampos();
-                            deshabilitarCampos();
-                            btnAgregar.setText("Nuevo");
-                            personaAux = new Persona();
-                            auxDirecciones = new ArrayList<>();
-                            auxDirecciones.add(new Direccion());
-                            numDireccion = 0;
-                            if(miDirectorio.getArchivos().size() != 1){
-                                btnContactoAnterior.setEnabled(true);
+                if(!actualizar){
+                    if(btnAgregar.getText().equals("Nuevo")){
+                        nuevo = true;
+                        auxDirecciones = new ArrayList<>();
+                        auxDirecciones.add(new Direccion());
+                        numDireccion = 0;
+                        numArchivo = miDirectorio.getArchivos().size()+1;
+                        lblNumeroContacto.setText("" + (numArchivo));
+                        habilitarCampos(true);
+                        btnAgregar.setText("Agregar");
+                        habilitarOpciones(false);
+                        btnAgregar.setEnabled(true);
+                        botonesDesplazamiento();
+                        btnDelDireccion.setEnabled(false);
+                        txtTelefono3.setEnabled(false);
+                        cBoxTelefono3.setEnabled(false);
+                        cBoxTelefono2.setEnabled(false);
+                        reestablecerCampos();
+                        btnEliminar.setText("Cancelar");
+                        btnEliminar.setEnabled(true);
+                    }
+                    else if (btnAgregar.getText().equals("Agregar")){
+                        reestablecerColores();
+                        auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                        auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                        auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+
+                        if(!verificarCampos()){
+                            obtenerDatos();
+                            try {
+                                miDirectorio.crearTxtPersona(personaAux, -1);
+                                JOptionPane.showMessageDialog(rootPane, 
+                                    ("El contacto " + txtNombres.getText() + " ha sido añadido con exito") ,
+                                    "Nuevo Contacto",
+                                    INFORMATION_MESSAGE);
+                                reestablecerCampos();
+                                habilitarCampos(false);
+                                btnAgregar.setText("Nuevo");
+                                personaAux = new Persona();
+                                auxDirecciones = new ArrayList<>();
+                                auxDirecciones.add(new Direccion());
+                                numDireccion = 0;
+                                if(miDirectorio.getArchivos().size() != 1){
+                                    btnContactoAnterior.setEnabled(true);
+                                }
+                                numArchivo = miDirectorio.getArchivos().size() -1;
+                                mostrarPersona();
+                                btnEliminar.setText("Eliminar");
+                                nuevo = false;
+                                habilitarOpciones(true);
+                            } catch (IOException ex) {
+                                Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            numArchivo = miDirectorio.getArchivos().size() -1;
-                            mostrarPersona();
-                            btnEliminar.setText("Eliminar");
-                            nuevo = false;
-                        } catch (IOException ex) {
-                            Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
@@ -862,7 +835,7 @@ public class DirectorioGUI extends JFrame {
                                 opciones[0]);
                         if(i == 0){
                             reestablecerCampos();
-                            deshabilitarCampos();
+                            habilitarCampos(false);
                             btnAgregar.setText("Nuevo");
                             personaAux = new Persona();
                             auxDirecciones = new ArrayList<>();
@@ -885,7 +858,7 @@ public class DirectorioGUI extends JFrame {
                             nuevo = false;
                             lblNumeroContacto.setText(""+(numArchivo+1));
                             btnEliminar.setText("Eliminar");
-                            btnEliminar.setEnabled(true);
+                            habilitarOpciones(true);
                             if(miDirectorio.getArchivos().isEmpty()){
                                 btnEliminar.setEnabled(false);
                             }
@@ -909,11 +882,8 @@ public class DirectorioGUI extends JFrame {
                                 opciones[0]);
                         if(i == 0){
                             reestablecerCampos();
-                            deshabilitarCampos();
+                            habilitarCampos(false);
                             btnActualizar.setText("Actualizar");
-                            personaAux = new Persona();
-                            auxDirecciones = new ArrayList<>();
-                            auxDirecciones.add(new Direccion());
                             try {
                                 mostrarPersona();
                             } catch (IOException ex) {
@@ -922,107 +892,75 @@ public class DirectorioGUI extends JFrame {
                             btnEliminar.setText("Eliminar");
                             actualizar = false;
                             reestablecerColores();
-                            btnAgregar.setEnabled(true);
-                            btnListar.setEnabled(true);
-                            btnExportarContactos.setEnabled(true);
+                            botonesDesplazamiento();
+                            habilitarOpciones(true);
                         }
                     }
                 }
             }
             if(e.getSource() == btnActualizar){
-                if(btnActualizar.getText().equals("Actualizar")){
-                    actualizar = true;
-                    btnActualizar.setText("Aceptar");
-                    btnEliminar.setText("Cancelar");
-                    btnAgregar.setEnabled(false);
-                    btnListar.setEnabled(false);
-                    btnExportarContactos.setEnabled(false);
-                    
-                    habilitarCampos();
-                    btnContactoAnterior.setEnabled(false);
-                    btnContactoSiguiente.setEnabled(false);
-                    botonesDesplazamiento();
-                    if(auxDirecciones.size() == 1){
-                        btnDelDireccion.setEnabled(false);
+                if(!nuevo){
+                    if(btnActualizar.getText().equals("Actualizar")){
+                            actualizar = true;
+                            btnActualizar.setText("Aceptar");
+                            btnEliminar.setText("Cancelar");
+                            btnAgregar.setEnabled(false);
+                            btnExportarContactos.setEnabled(false);
+                            btnBkp.setEnabled(false);
+
+                            habilitarCampos(true);
+                            botonesDesplazamiento();
+                            btnContactoAnterior.setEnabled(false);
+                            btnContactoSiguiente.setEnabled(false);
+                            if(auxDirecciones.size() == 1){
+                                btnDelDireccion.setEnabled(false);
+                            }
+                        }
+                        else if(btnActualizar.getText().equals("Aceptar")){
+                            auxDirecciones.get(numDireccion).setDireccion(txtDireccion.getText());
+                            auxDirecciones.get(numDireccion).setBarrio(txtBarrio.getText());
+                            auxDirecciones.get(numDireccion).setCiudad(txtCiudad.getText());
+                            
+                            if(!verificarCampos()){
+                                personaAux = new Persona();
+                                obtenerDatos();                        
+                                try {
+                                    miDirectorio.crearTxtPersona(personaAux, numArchivo);
+                                    JOptionPane.showMessageDialog(rootPane, 
+                                        ("El contacto " + txtNombres.getText() + " ha sido actualizado con exito") ,
+                                        "Actualizar Contacto",
+                                        INFORMATION_MESSAGE);
+                                    reestablecerCampos();
+                                    habilitarCampos(false);
+                                    btnActualizar.setText("Actualizar");
+                                    personaAux = new Persona();
+                                    auxDirecciones = new ArrayList<>();
+                                    auxDirecciones.add(new Direccion());
+                                    mostrarPersona();
+                                    btnEliminar.setText("Eliminar");
+                                    actualizar = false;
+                                } catch (IOException ex) {
+                                        Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                btnAgregar.setEnabled(true);
+                                btnExportarContactos.setEnabled(true);                             
+                                btnAddDireccion.setEnabled(false);
+                                btnDelDireccion.setEnabled(false);
+                                reestablecerColores();
+                                botonesDesplazamiento();
+                                habilitarOpciones(true);
+                            }
+                        }    
                     }
                 }
-                else if(btnActualizar.getText().equals("Aceptar")){
-                    if(!verificarCampos()){
-                        personaAux = new Persona();
-                        Map<String,Boolean> tipoContactoAux;
-                        tipoContactoAux = new HashMap<>();
-                        tipoContactoAux.put("Estudiante",false);
-                        tipoContactoAux.put("Profesor",false);
-                        tipoContactoAux.put("Empleado",false);
-
-                        personaAux.setNombre(txtNombres.getText());
-                        personaAux.setApellidos(txtApellidos.getText());
-                        personaAux.setFecha(txtFechaNacimiento.getText());
-                        personaAux.setId(Long.parseLong(txtId.getText()));
-                        personaAux.setIdTipo(cBoxTipoId.getSelectedItem().toString());
-                        if(chkEstudiante.isSelected()){
-                            tipoContactoAux.replace("Estudiante",true);
-                        }
-                        if(chkProfesor.isSelected()){
-                            tipoContactoAux.replace("Profesor",true);
-                        }
-                        if(chkEmpleado.isSelected()){
-                            tipoContactoAux.replace("Empleado",true);
-                        }
-                        personaAux.setContacto(tipoContactoAux);
-
-                        Telefono auxTel = new Telefono();
-                        ArrayList<Telefono> auxTels = new ArrayList<>();
-                        auxTel.setNumero(Long.parseLong(txtTelefono1.getText()));
-                        auxTel.setTipo((cBoxTelefono1.getSelectedItem().toString()));
-                        auxTels.add(auxTel);
-                        if(!txtTelefono2.getText().equals("")){
-                            Telefono auxTel2 = new Telefono();
-                            auxTel2.setNumero(Long.parseLong(txtTelefono2.getText()));
-                            auxTel2.setTipo(cBoxTelefono2.getSelectedItem().toString());
-                            auxTels.add(auxTel2);
-                        }
-                        if(!txtTelefono3.getText().equals("")){
-                            Telefono auxTel3 = new Telefono();
-                            auxTel3.setNumero(Long.parseLong(txtTelefono3.getText()));
-                            auxTel3.setTipo(cBoxTelefono3.getSelectedItem().toString());
-                            auxTels.add(auxTel3);
-                        }
-                        personaAux.setTelefonos(auxTels);
-                        personaAux.setDirecciones(auxDirecciones);                        
-                        try {
-                            miDirectorio.actualizarPersona(numArchivo, personaAux);
-                            JOptionPane.showMessageDialog(rootPane, 
-                                ("El contacto " + txtNombres.getText() + " ha sido actualizado con exito") ,
-                                "Actualizar Contacto",
-                                INFORMATION_MESSAGE);
-                            reestablecerCampos();
-                            deshabilitarCampos();
-                            btnActualizar.setText("Actualizar");
-                            personaAux = new Persona();
-                            auxDirecciones = new ArrayList<>();
-                            auxDirecciones.add(new Direccion());
-                            mostrarPersona();
-                            btnEliminar.setText("Eliminar");
-                            actualizar = false;
-                        } catch (IOException ex) {
-                                Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        btnAgregar.setEnabled(true);
-                        btnListar.setEnabled(true);
-                        btnExportarContactos.setEnabled(true);                             
-                        btnAddDireccion.setEnabled(false);
-                        btnDelDireccion.setEnabled(false);
-                        reestablecerColores();
-                    }
-                }    
-            }
             if(e.getSource() == btnExportarContactos){
-                try {
-                    miDirectorio.crearArchivoPlano();
-                    JOptionPane.showMessageDialog(rootPane,"El archivo con los contactos se ha creado");
-                } catch (IOException ex) {
-                    Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                if(!nuevo && !actualizar){
+                    try {
+                        miDirectorio.crearArchivoPlano();
+                        JOptionPane.showMessageDialog(rootPane,"El archivo con los contactos se ha creado");
+                    } catch (IOException ex) {
+                        Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
             if(e.getSource() == btnAddDireccion){
@@ -1091,7 +1029,7 @@ public class DirectorioGUI extends JFrame {
             }
             if(e.getSource() == btnContactoAnterior){
                 if(!miDirectorio.getArchivos().isEmpty()){
-                    if(!nuevo){
+                    if(!nuevo && !actualizar){
                         if(numArchivo != 0){
                             numArchivo -= 1;
                             lblNumeroContacto.setText("" + (numArchivo+1));
@@ -1116,7 +1054,7 @@ public class DirectorioGUI extends JFrame {
                 }
             }
             if(e.getSource() == btnContactoSiguiente){
-                if(!nuevo){
+                if(!nuevo && !actualizar){
                     if(miDirectorio.getArchivos().isEmpty()){
                         btnContactoSiguiente.setEnabled(false);
                     }

@@ -152,9 +152,17 @@ public class Directorio {
         }
     }
     
-    public void agregarPersona(Persona persona) throws IOException{
-        FileWriter archivoTexto = new FileWriter("src/archivos/persona_" + 
+    public void crearTxtPersona(Persona persona, int archivo) throws IOException{
+        FileWriter archivoTexto;
+        if(archivo == -1){ //Nuevo contacto
+            archivoTexto = new FileWriter("src/archivos/persona_" + 
                 (archivos.size() + 1) + ".txt");
+        }
+        else{ // Actualizar Contacto
+            System.out.println("Entra");
+            archivoTexto = new FileWriter("src/archivos/persona_" + 
+                (archivo+1) + ".txt");
+        }
         
         PrintWriter pw = new PrintWriter(archivoTexto);
         
@@ -204,60 +212,6 @@ public class Directorio {
         verificarArchivos();
     }
     
-    public void actualizarPersona(int archivo, Persona persona) throws IOException{
-        if(archivos.get(archivo).getArchivo().exists()){
-            FileWriter archivoTexto = new FileWriter("src/archivos/persona_" + 
-                (archivo+1) + ".txt");
-        
-            PrintWriter pw = new PrintWriter(archivoTexto);
-
-            pw.println("Nombre : " + persona.getNombre());
-            pw.println("Apellidos : " + persona.getApellidos());
-            pw.println("Fecha de Nacimiento : " + persona.getFecha());
-            pw.println("ID : " + persona.getId());
-            pw.println("Tipo de Documento : " + persona.getIdTipo());
-            String auxStr = "";
-            for(Map.Entry<String, Boolean> entry : persona.getContacto().entrySet()){
-                if(entry.getKey().equals("Estudiante")){
-                    if(entry.getValue()){
-                        auxStr += "Estudiante,";
-                    }
-                }
-                if(entry.getKey().equals("Profesor")){
-                    if(entry.getValue()){
-                        auxStr += "Profesor,";
-                    }
-                }   
-                if(entry.getKey().equals("Empleado")){
-                    if(entry.getValue()){
-                        auxStr += "Empleado,";
-                    }
-                }   
-            }
-            pw.println("Rol : " + auxStr);
-            int i = 1;
-            for(Telefono telefono : persona.getTelefonos()){
-                pw.println("Telefono " + i + " : " + telefono.getNumero() + ", " + telefono.getTipo());
-                i++;
-            }
-            i = 1;
-            for(Direccion direccion : persona.getDirecciones()){
-                pw.println("Direccion " + i + " : " + 
-                        direccion.getDireccion() + ", " +
-                        direccion.getBarrio() + ", " +
-                        direccion.getCiudad());
-                i++;
-            }
-            try {
-               if ( archivoTexto != null)
-                  archivoTexto.close();
-            } catch (IOException e2) {
-                  e2.printStackTrace();
-            }
-            verificarArchivos();
-        }
-    }
-    
     public void eliminarPersona(int archivo) {
         archivos.get(archivo).getArchivo().delete();
         for (int i = 0; i < archivos.size(); i++) {
@@ -265,10 +219,6 @@ public class Directorio {
             archivos.get(i).renombrarArchivo(auxFile);
         }
         verificarArchivos();
-    }
-    
-    public void mostrarLista(){
-        
     }
     
     public void crearArchivoPlano() throws IOException{
