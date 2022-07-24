@@ -1,8 +1,0 @@
-Nombre : Diego Fernando
-Apellidos : Munoz
-Fecha de Nacimiento : 5/22/1982
-ID : 34567
-Tipo de Documento : CC
-Rol : Profesor,
-Telefono 1 : 124555, Trabajo
-Direccion 1 : Calle 4N # 11-32, Nueva Villa, Cali

@@ -1,9 +1,8 @@
-Nombre : Mauricio
-Apellidos : Munoz Gutierrez
-Fecha de Nacimiento : 09/08/2003
-ID : 12345
+Nombre : Mauro
+Apellidos : aaaaaa
+Fecha de Nacimiento : 563653
+ID : 65365365
 Tipo de Documento : CC
 Rol : Estudiante,
-Telefono 1 : 12343, Casa
-Direccion 1 : Carrera 60# 32-21, Santa Anita, Cali
-Direccion 2 : Calle 32N # 21-4, Cristal, Cali
+Telefono 1 : 74453453, Casa
+Direccion 1 : nfghfgh, fghfghfgh, fhfghfh

@@ -1,8 +1,9 @@
 Nombre : Carlos
 Apellidos : Hernandez
-Fecha de Nacimiento : 07/31/2003
-ID : 10057623
-Tipo de Documento : CC
-Rol : Empleado,
-Telefono 1 : 312012355, Móvil
-Direccion 1 : carrera 29 a, El paraiso, Venecia
+Fecha de Nacimiento : 457587
+ID : 41252543
+Tipo de Documento : TI
+Rol : Estudiante,
+Telefono 1 : 43563653, Casa
+Telefono 2 : 5446546, Casa
+Direccion 1 : rtertert, retertert, erterte

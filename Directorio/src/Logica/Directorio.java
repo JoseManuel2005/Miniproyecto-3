@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -288,5 +289,30 @@ public class Directorio implements Serializable{
         }catch(Exception e){
             System.out.println("Error");
         }
+    }
+    
+    public void eliminarArchivos(){
+        for (int i = 0; i < archivos.size(); i++) {
+            if (archivos.get(i).getArchivo().exists()) {
+                archivos.get(i).getArchivo().delete();                     
+            }
+        }
+        archivos.clear();   
+    }
+       
+    
+    public void restaurarContactos() throws FileNotFoundException, IOException, ClassNotFoundException{
+        Persona personaAux;
+        
+        FileInputStream fis= new FileInputStream("src/bkp/bkp.bin");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        eliminarArchivos();
+        while (true) {            
+            personaAux = (Persona)ois.readObject();
+            crearTxtPersona(personaAux, -1);             
+        }
+        
+        
+        
     }
 }
