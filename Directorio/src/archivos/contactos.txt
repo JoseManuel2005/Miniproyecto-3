@@ -1,3 +1,6 @@
-Mauricio;Munoz Gutierrez;09/08/2003;12345;CC;12343;Casa;direccionNuevo;barrioBuevo;ciudadNuevo;Estudiante;
+Mauricio;Munoz Gutierrez;09/08/2003;12345;CC;12343;Casa;Carrera 60# 32-21;Santa Anita;Cali;Estudiante;
 Luis;Munoz Gutierrez;04/06/1999;5678;CC;1234;Casa;Direccion2;Barrio2;ciudad2;Profesor;
 Carlos;Hernandez;07/31/2003;10057623;CC;312012355;Móvil;carrera 29 a;El paraiso;Venecia;Empleado
+Alejandro;Munoz Gutierrez;09/08/2003;78910;CC;123456;Casa;Carrera 72 # 12-16;El corral;Cali;Empleado
+Diego Fernando;Munoz;5/22/1982;34567;CC;124555;Trabajo;Calle 4N # 11-32;Nueva Villa;Cali;Profesor;
+Jose Manuel;Palma;05/22/2005;121112;TI;1341234;Casa;Calle 12 # 21-81;Paraiso;Yumbo;Estudiante;

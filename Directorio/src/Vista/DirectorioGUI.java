@@ -4,7 +4,6 @@
  */
 package Vista;
 
-import Logica.Archivo;
 import Logica.Direccion;
 import Logica.Directorio;
 import Logica.Persona;
@@ -102,6 +101,7 @@ public class DirectorioGUI extends JFrame {
         setTitle("Directorio");
         setSize(750, 540);
         setVisible(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
@@ -810,6 +810,13 @@ public class DirectorioGUI extends JFrame {
                                     btnContactoAnterior.setEnabled(false);
                                     btnContactoSiguiente.setEnabled(false);
                                 }
+                                else{
+                                    try {
+                                        mostrarPersona();
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
                             }
                             else{
                                 if(numArchivo == miDirectorio.getArchivos().size()){
@@ -968,33 +975,61 @@ public class DirectorioGUI extends JFrame {
                 }
             }
             if(e.getSource() == btnGenerarBkp){
-                try {
-                    miDirectorio.generarBkp();
-                    JOptionPane.showMessageDialog(rootPane, "El Backup se ha creado exitosamente.");
-                } catch (IOException ex) {
-                    Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                if(!nuevo && !actualizar){
+                    String[] opciones = {"Si", "No"};
+                        int i = JOptionPane.showOptionDialog(rootPane,
+                                "Desea generar una copia de seguridad?\n"
+                                + "Al hacerlo perderá la copia anterior (Si existe)",
+                                "Restaurar información",
+                                JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null,
+                                opciones,
+                                opciones[0]);
+                    if(i == 0){
+                        if(miDirectorio.getArchivos().size() == 0){
+                            JOptionPane.showMessageDialog(rootPane, "No existen contactos para crear una copia");
+                        }else{
+                            try {
+                                miDirectorio.generarBkp();
+                                JOptionPane.showMessageDialog(rootPane, "El Backup se ha creado exitosamente.");
+                            } catch (IOException ex) {
+                                Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }    
                 }
             }
             if(e.getSource() == btnBkp){
-                /*
-                
-                Toca verificar primero si existe bkp.bin, de lo contrario mostrar un mensaje diciendo que no existe
-                
-                */
-                String[] opciones = {"Si","No"};
-                int i = JOptionPane.showOptionDialog(rootPane, 
-                        "Desea restaurar los contactos de la copia de seguridad?\\n"
-                                + "Al hacerlo perderá todos los contactos actuales", 
-                        "Restaurar información", 
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        opciones,
-                        opciones[0]);
-                if(i == 0){
-                    // Se restauran, cualquier otra opcion no hace nada.
+                if(!nuevo && !actualizar){
+                    File archivoAux1 = new File("src/bkp/bkp.bin");
+                    if (archivoAux1.exists()) {
+                        String[] opciones = {"Si", "No"};
+                        int i = JOptionPane.showOptionDialog(rootPane,
+                                "Desea restaurar los contactos de la copia de seguridad?\n"
+                                + "Al hacerlo perderá todos los contactos actuales",
+                                "Restaurar información",
+                                JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null,
+                                opciones,
+                                opciones[0]);
+                        if (i == 0) {
+                            try {
+                                miDirectorio.restaurarContactos();
+                                numDireccion = 0;
+                                mostrarPersona();
+                                botonesDesplazamiento();
+                                JOptionPane.showMessageDialog(rootPane, "Los contactos fueron restaurados.");
+                            } catch (IOException | ClassNotFoundException ex) {
+                                Logger.getLogger(DirectorioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado una copia de los contactos,\n"
+                                + "por favor crea una", "Error", ERROR_MESSAGE);
+                    }
                 }
-                
             }
             if(e.getSource() == btnAddDireccion){
                 if(nuevo || actualizar){

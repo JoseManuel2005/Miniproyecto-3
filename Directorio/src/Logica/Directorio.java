@@ -4,12 +4,15 @@
  */
 package Logica;
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -217,7 +220,9 @@ public class Directorio implements Serializable{
     
     public void eliminarPersona(int archivo) {
         archivos.get(archivo).getArchivo().delete();
+        archivos.remove(archivo);
         for (int i = 0; i < archivos.size(); i++) {
+            System.out.println(i+1);
             File auxFile = new File("src/archivos/persona_"+(i+1)+".txt");
             archivos.get(i).renombrarArchivo(auxFile);
         }
@@ -287,6 +292,32 @@ public class Directorio implements Serializable{
             fos.close();
         }catch(Exception e){
             System.out.println("Error");
+        }
+    }
+    
+    public void eliminarArchivos(){
+        for (int i = 0; i < archivos.size(); i++) {
+            if (archivos.get(i).getArchivo().exists()) {
+                archivos.get(i).getArchivo().delete();                     
+            }
+        }
+        archivos.clear();   
+    }
+       
+    
+    public void restaurarContactos() throws FileNotFoundException, IOException, ClassNotFoundException{
+        Persona personaAux;
+        
+        FileInputStream fis= new FileInputStream("src/bkp/bkp.bin");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        eliminarArchivos();
+        try{
+            while(true) {            
+                personaAux = (Persona)ois.readObject();
+                crearTxtPersona(personaAux, -1);             
+            }   
+        } catch (EOFException e) {
+            //Termina de leer los archivos
         }
     }
 }
